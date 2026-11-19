@@ -5,8 +5,10 @@ import { validateContribution } from "./contribution";
 const data: GameData = {
   version: "t",
   sample: true,
+  updatedAt: "2026-11-19",
+  sections: [],
   categories: [
-    { id: "cascades", slug: "cascades", name: "Cascades", unit: "cascade", total: 3, description: "", reliability: { status: "rumor" }, items: [] },
+    { id: "cascades", slug: "cascades", name: "Cascades", unit: "cascade", section: "activites", required: 3, total: 3, description: "", reliability: { status: "rumor" }, items: [] },
   ],
 };
 

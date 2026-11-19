@@ -1,29 +1,1395 @@
 {
-  "version": "2026-11-19.0",
-  "sample": true,
+  "version": "2026-11-19.1",
+  "sample": false,
+  "updatedAt": "2026-11-19",
+  "sections": [
+    {
+      "id": "histoire",
+      "name": "Histoire et casses"
+    },
+    {
+      "id": "activites",
+      "name": "Exploration et activités"
+    },
+    {
+      "id": "decouverte",
+      "name": "Découverte"
+    }
+  ],
   "categories": [
     {
       "id": "histoire",
       "slug": "histoire",
-      "name": "Histoire",
+      "name": "Missions de l'histoire",
       "unit": "mission",
-      "total": 49,
-      "description": "Les missions principales, dans l'ordre.",
-      "reliability": { "status": "rumor" },
+      "section": "histoire",
+      "required": 94,
+      "total": 94,
+      "gameLabel": "Story",
+      "description": "Les missions principales dans l'ordre, chapitre par chapitre. Les sources annoncent entre 91 et 93 missions : celles qui ne font pas l'unanimité sont signalées. Les titres des chapitres 4 et 5 sont masqués par l'anti-spoiler.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+      },
       "items": [
-        { "id": "histoire-1", "n": 1, "title": "Mission 1", "reliability": { "status": "rumor" } },
-        { "id": "histoire-2", "n": 2, "title": "Mission 2", "spoiler": true, "reliability": { "status": "rumor" } },
-        { "id": "histoire-3", "n": 3, "title": "Mission 3", "spoiler": true, "reliability": { "status": "rumor" } }
+        {
+          "id": "mission-prologue",
+          "n": 1,
+          "title": "Prologue",
+          "where": "Chapitre 1",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-gone-fishing",
+          "n": 2,
+          "title": "Gone Fishing",
+          "where": "Chapitre 1",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-gear-up",
+          "n": 3,
+          "title": "Gear Up",
+          "where": "Chapitre 1",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-just-a-scratch",
+          "n": 4,
+          "title": "Just a Scratch",
+          "where": "Chapitre 1",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-lab-fees",
+          "n": 5,
+          "title": "Lab Fees",
+          "where": "Chapitre 1",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-unwanted-attention",
+          "n": 6,
+          "title": "Unwanted Attention",
+          "where": "Chapitre 1",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-pipework",
+          "n": 7,
+          "title": "Pipework",
+          "where": "Chapitre 1",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-hey-arnold",
+          "n": 8,
+          "title": "Hey Arnold!",
+          "where": "Chapitre 1",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-island-dreams",
+          "n": 9,
+          "title": "Island Dreams",
+          "where": "Chapitre 1",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-feng-shui",
+          "n": 10,
+          "title": "Feng Shui",
+          "where": "Chapitre 1",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-coming-home",
+          "n": 11,
+          "title": "Coming Home",
+          "where": "Chapitre 1",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-buck-me",
+          "n": 12,
+          "title": "Buck Me",
+          "where": "Chapitre 1",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-clean-up-after-donnie",
+          "n": 13,
+          "title": "Clean Up After Donnie",
+          "where": "Chapitre 1",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-down-to-earth",
+          "n": 14,
+          "title": "Down to Earth",
+          "where": "Chapitre 1",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-clear-skies",
+          "n": 15,
+          "title": "Clear Skies",
+          "where": "Chapitre 1",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-day-release",
+          "n": 16,
+          "title": "Day Release",
+          "where": "Chapitre 1",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-swamped",
+          "n": 17,
+          "title": "Swamped",
+          "where": "Chapitre 1",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-don-gone",
+          "n": 18,
+          "title": "Don Gone",
+          "where": "Chapitre 1",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-recalibration",
+          "n": 19,
+          "title": "Recalibration",
+          "where": "Chapitre 1",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-tourist-trap",
+          "n": 20,
+          "title": "Tourist Trap",
+          "where": "Chapitre 1",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-home-sweet-home",
+          "n": 21,
+          "title": "Home Sweet Home",
+          "where": "Chapitre 1",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-discharge-time",
+          "n": 22,
+          "title": "Discharge Time",
+          "where": "Chapitre 1",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-what-s-in-the-bag",
+          "n": 23,
+          "title": "What's in the Bag?",
+          "where": "Chapitre 2",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-ambulance-chaser",
+          "n": 24,
+          "title": "Ambulance Chaser",
+          "where": "Chapitre 2",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-just-moved-in",
+          "n": 25,
+          "title": "Just Moved In",
+          "where": "Chapitre 2",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-girls-trip",
+          "n": 26,
+          "title": "Girls' Trip",
+          "where": "Chapitre 2 · Titre exact à confirmer (« Girls' Trip » ou « Girls' Trap »)",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.panstag.com/2026/11/gta-6-missions-list-hours-to-beat.html"
+          }
+        },
+        {
+          "id": "mission-moses",
+          "n": 27,
+          "title": "Moses",
+          "where": "Chapitre 2",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-daily-driver",
+          "n": 28,
+          "title": "Daily Driver",
+          "where": "Chapitre 2",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-slam-dunk",
+          "n": 29,
+          "title": "Slam Dunk",
+          "where": "Chapitre 2",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-breakfast-run",
+          "n": 30,
+          "title": "Breakfast Run",
+          "where": "Chapitre 2",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-coffee-break",
+          "n": 31,
+          "title": "Coffee Break",
+          "where": "Chapitre 2",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-afternoon-delight",
+          "n": 32,
+          "title": "Afternoon Delight",
+          "where": "Chapitre 2",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-thrillbillies",
+          "n": 33,
+          "title": "Thrillbillies",
+          "where": "Chapitre 2 · Absente de certaines listes (peut-être une mission secondaire)",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.panstag.com/2026/11/gta-6-missions-list-hours-to-beat.html"
+          }
+        },
+        {
+          "id": "mission-twist-wrist-smash-grab",
+          "n": 34,
+          "title": "Twist Wrist, Smash, Grab",
+          "where": "Chapitre 2 · Absente de certaines listes (peut-être une mission secondaire)",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.panstag.com/2026/11/gta-6-missions-list-hours-to-beat.html"
+          }
+        },
+        {
+          "id": "mission-checking-out",
+          "n": 35,
+          "title": "Checking Out",
+          "where": "Chapitre 2",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-welcome-to-vice-city",
+          "n": 36,
+          "title": "Welcome to Vice City",
+          "where": "Chapitre 3",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-dealer-s-choice",
+          "n": 37,
+          "title": "Dealer's Choice",
+          "where": "Chapitre 3",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-meet-the-heders",
+          "n": 38,
+          "title": "Meet the Heders",
+          "where": "Chapitre 3",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-dubious-provenance",
+          "n": 39,
+          "title": "Dubious Provenance",
+          "where": "Chapitre 3",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-mami-knows-best",
+          "n": 40,
+          "title": "Mami Knows Best",
+          "where": "Chapitre 3",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-south-leonida-real-estate",
+          "n": 41,
+          "title": "South Leonida Real Estate",
+          "where": "Chapitre 3",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-tyrone",
+          "n": 42,
+          "title": "Tyrone",
+          "where": "Chapitre 3",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-here-kitty-kitty",
+          "n": 43,
+          "title": "Here, Kitty Kitty",
+          "where": "Chapitre 3",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-kitty-litter-labs",
+          "n": 44,
+          "title": "Kitty Litter Labs",
+          "where": "Chapitre 3 · Absente de certaines listes",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.panstag.com/2026/11/gta-6-missions-list-hours-to-beat.html"
+          }
+        },
+        {
+          "id": "mission-car-service",
+          "n": 45,
+          "title": "Car Service",
+          "where": "Chapitre 3",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-top-billing",
+          "n": 46,
+          "title": "Top Billing",
+          "where": "Chapitre 3",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-boobie-time",
+          "n": 47,
+          "title": "Boobie Time",
+          "where": "Chapitre 3",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-first-impressions",
+          "n": 48,
+          "title": "First Impressions",
+          "where": "Chapitre 3",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-caught-slipping",
+          "n": 49,
+          "title": "Caught Slipping",
+          "where": "Chapitre 3 · Absente de certaines listes",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.panstag.com/2026/11/gta-6-missions-list-hours-to-beat.html"
+          }
+        },
+        {
+          "id": "mission-crosstown-traffic",
+          "n": 50,
+          "title": "Crosstown Traffic",
+          "where": "Chapitre 3",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-credit-check",
+          "n": 51,
+          "title": "Credit Check",
+          "where": "Chapitre 3",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-steal-the-zorrusso-for-randy",
+          "n": 52,
+          "title": "Steal the Zorrusso for Randy",
+          "where": "Chapitre 3",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-sinfrontera-national-bank",
+          "n": 53,
+          "title": "Sinfrontera National Bank",
+          "where": "Chapitre 3",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-security-expert",
+          "n": 54,
+          "title": "Security Expert",
+          "where": "Chapitre 3",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-ride-or-die",
+          "n": 55,
+          "title": "Ride or Die",
+          "where": "Chapitre 3",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-company-property",
+          "n": 56,
+          "title": "Company Property",
+          "where": "Chapitre 3",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-the-missing-link",
+          "n": 57,
+          "title": "The Missing Link",
+          "where": "Chapitre 3",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-safe-word",
+          "n": 58,
+          "title": "Safe Word",
+          "where": "Chapitre 3",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-cooties",
+          "n": 59,
+          "title": "Cooties",
+          "where": "Chapitre 3",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-bricked-up",
+          "n": 60,
+          "title": "Bricked Up",
+          "where": "Chapitre 3",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-hidden-charges",
+          "n": 61,
+          "title": "Hidden Charges",
+          "where": "Chapitre 3",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-the-cartel-heist",
+          "n": 62,
+          "title": "The Cartel Heist",
+          "where": "Chapitre 3",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-ocean-beach",
+          "n": 63,
+          "title": "Ocean Beach",
+          "where": "Chapitre 4",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-another-life",
+          "n": 64,
+          "title": "Another Life",
+          "where": "Chapitre 4",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-company-cars",
+          "n": 65,
+          "title": "Company Cars",
+          "where": "Chapitre 4",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-lawyer-up",
+          "n": 66,
+          "title": "Lawyer Up",
+          "where": "Chapitre 4",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-party-hard",
+          "n": 67,
+          "title": "Party Hard",
+          "where": "Chapitre 4",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-heavy-lifting",
+          "n": 68,
+          "title": "Heavy Lifting",
+          "where": "Chapitre 4",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-photo-shoot",
+          "n": 69,
+          "title": "Photo/Shoot",
+          "where": "Chapitre 4",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-making-gainz",
+          "n": 70,
+          "title": "Making Gainz",
+          "where": "Chapitre 4",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-watch-it",
+          "n": 71,
+          "title": "Watch It",
+          "where": "Chapitre 4",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-cash-injections",
+          "n": 72,
+          "title": "Cash Injections",
+          "where": "Chapitre 4",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-amateur-hour",
+          "n": 73,
+          "title": "Amateur Hour",
+          "where": "Chapitre 4",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-dirty-work",
+          "n": 74,
+          "title": "Dirty Work",
+          "where": "Chapitre 4",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-too-much-baggage",
+          "n": 75,
+          "title": "Too Much Baggage",
+          "where": "Chapitre 4",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-adventures-in-babysitting",
+          "n": 76,
+          "title": "Adventures in Babysitting",
+          "where": "Chapitre 4",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-fresh-evidence",
+          "n": 77,
+          "title": "Fresh Evidence",
+          "where": "Chapitre 4",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-power-play",
+          "n": 78,
+          "title": "Power Play",
+          "where": "Chapitre 4",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-child-s-play",
+          "n": 79,
+          "title": "Child's Play",
+          "where": "Chapitre 4",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-headliners",
+          "n": 80,
+          "title": "Headliners",
+          "where": "Chapitre 4",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-close-surveillance",
+          "n": 81,
+          "title": "Close Surveillance",
+          "where": "Chapitre 4",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-delivery-method",
+          "n": 82,
+          "title": "Delivery Method",
+          "where": "Chapitre 4",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-team-building",
+          "n": 83,
+          "title": "Team Building",
+          "where": "Chapitre 4",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-fully-catered",
+          "n": 84,
+          "title": "Fully Catered",
+          "where": "Chapitre 4",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-vcia-takedown",
+          "n": 85,
+          "title": "VCIA Takedown",
+          "where": "Chapitre 4",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-sunset",
+          "n": 86,
+          "title": "Sunset",
+          "where": "Chapitre 4",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-starting-from-zero",
+          "n": 87,
+          "title": "Starting from Zero",
+          "where": "Chapitre 4",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-bird-in-the-hand",
+          "n": 88,
+          "title": "Bird in the Hand",
+          "where": "Chapitre 5",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-taking-liberties",
+          "n": 89,
+          "title": "Taking Liberties",
+          "where": "Chapitre 5",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-vc-baby",
+          "n": 90,
+          "title": "VC Baby",
+          "where": "Chapitre 5",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-doggie-bag",
+          "n": 91,
+          "title": "Doggie Bag",
+          "where": "Chapitre 5",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-operation-savage-glory",
+          "n": 92,
+          "title": "Operation Savage Glory",
+          "where": "Chapitre 5",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-protective-custody",
+          "n": 93,
+          "title": "Protective Custody",
+          "where": "Chapitre 5",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        },
+        {
+          "id": "mission-the-end-of-the-road",
+          "n": 94,
+          "title": "The End of the Road",
+          "where": "Chapitre 5",
+          "spoiler": true,
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.pushsquare.com/guides/gta-6-chapters-and-story-missions"
+          }
+        }
       ]
+    },
+    {
+      "id": "taches",
+      "slug": "taches-optionnelles",
+      "name": "Tâches optionnelles",
+      "unit": "tâche",
+      "section": "histoire",
+      "required": 100,
+      "total": 100,
+      "totalKnown": false,
+      "gameLabel": "Optional Tasks Completed",
+      "description": "Petites activités annexes. Les méditations et les livraisons de voitures en font partie. Il en existe bien plus que 100.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
+      "items": []
+    },
+    {
+      "id": "gangs",
+      "slug": "operations-de-gangs",
+      "name": "Opérations contre les gangs",
+      "unit": "opération",
+      "section": "histoire",
+      "required": 39,
+      "total": 39,
+      "gameLabel": "Gang Operations Cleared",
+      "description": "Repaires de gangs à nettoyer sur la carte. Les 39 sont nécessaires.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
+      "items": []
     },
     {
       "id": "braquages",
       "slug": "braquages-de-banque",
-      "name": "Braquages de banque",
-      "unit": "braquage",
+      "name": "Casses de banques",
+      "unit": "casse",
+      "section": "histoire",
+      "required": 22,
       "total": 22,
-      "description": "Chaque banque braquée au moins une fois.",
-      "reliability": { "status": "rumor" },
+      "gameLabel": "Bank Jobs Fully Completed",
+      "description": "Chaque banque doit être braquée jusqu'au bout. Les 22 comptent.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
+      "items": []
+    },
+    {
+      "id": "prets",
+      "slug": "prets-sur-salaire",
+      "name": "Boutiques de prêts sur salaire",
+      "unit": "boutique",
+      "section": "histoire",
+      "required": 7,
+      "total": 7,
+      "gameLabel": "Payday Loan Jobs Fully Completed",
+      "description": "Les 7 officines de prêt à dévaliser entièrement.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
+      "items": []
+    },
+    {
+      "id": "casses-eclair",
+      "slug": "casses-eclair",
+      "name": "Casses éclair",
+      "unit": "casse",
+      "section": "histoire",
+      "required": 34,
+      "total": 35,
+      "gameLabel": "Smash 'N' Grabs Fully Completed",
+      "description": "Vitrines à défoncer et vider en vitesse. 34 suffisent sur 35.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
+      "items": []
+    },
+    {
+      "id": "hold-up",
+      "slug": "hold-up-magasins",
+      "name": "Hold-up de magasins",
+      "unit": "hold-up",
+      "section": "histoire",
+      "required": 50,
+      "total": 91,
+      "gameLabel": "Stick Ups Fully Completed",
+      "description": "50 commerces différents à braquer : refaire le même magasin ne compte qu'une fois.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
+      "items": []
+    },
+    {
+      "id": "coffres",
+      "slug": "coffres-forts",
+      "name": "Coffres-forts de grandes banques",
+      "unit": "coffre",
+      "section": "histoire",
+      "required": 8,
+      "total": 8,
+      "gameLabel": "Vaults Hit",
+      "description": "Seules les grandes banques ont un coffre. Les 8 sont requis.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
+      "items": []
+    },
+    {
+      "id": "kenton",
+      "slug": "sets-kenton",
+      "name": "Sets Kenton",
+      "unit": "set",
+      "section": "activites",
+      "required": 5,
+      "total": 7,
+      "gameLabel": "Kenton Sets Completed",
+      "description": "5 sets sur 7 suffisent pour le 100 %, mais les 7 servent à débloquer toutes les découvertes sous-marines.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
+      "items": []
+    },
+    {
+      "id": "cartes",
+      "slug": "cartes-a-collectionner",
+      "name": "Sets de cartes à collectionner",
+      "unit": "set",
+      "section": "activites",
+      "required": 15,
+      "total": 18,
+      "gameLabel": "Collectible Card Sets Found",
+      "description": "18 sets pour 480 cartes au total. Il faut en compléter 15.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
+      "items": []
+    },
+    {
+      "id": "waink",
+      "slug": "lieux-waink",
+      "name": "Lieux scannés avec WAiNK",
+      "unit": "lieu",
+      "section": "activites",
+      "required": 100,
+      "total": 100,
+      "totalKnown": false,
+      "gameLabel": "WAiNK Locations Scanned",
+      "description": "Lieux à scanner avec l'appli WAiNK du téléphone. Le total réel n'est pas encore connu.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
+      "items": []
+    },
+    {
+      "id": "sous-marin",
+      "slug": "decouvertes-sous-marines",
+      "name": "Découvertes sous-marines",
+      "unit": "découverte",
+      "section": "activites",
+      "required": 33,
+      "total": 33,
+      "gameLabel": "Underwater Discoveries Found",
+      "description": "Toutes sont requises. Il faut avoir fini les 7 sets Kenton pour y accéder entièrement.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
+      "items": []
+    },
+    {
+      "id": "magazines",
+      "slug": "magazines-livres-bd",
+      "name": "Magazines, livres et BD",
+      "unit": "titre",
+      "section": "activites",
+      "required": 30,
+      "total": 34,
+      "gameLabel": "Magazines, Books & Comics Found",
+      "description": "Seuls les titres différents comptent, doublons exclus. Les échanges de livres font partie du total.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
+      "items": []
+    },
+    {
+      "id": "meditation",
+      "slug": "spots-de-meditation",
+      "name": "Spots de méditation",
+      "unit": "spot",
+      "section": "activites",
+      "required": 15,
+      "total": 18,
+      "gameLabel": "Meditation Spots Completed",
+      "description": "15 spots sur 18. Les faire avec Jason puis avec Lucia compte double.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
+      "items": []
+    },
+    {
+      "id": "flamants",
+      "slug": "flamants-cocaine",
+      "name": "Flamants à cocaïne détruits",
+      "unit": "flamant",
+      "section": "activites",
+      "required": 100,
+      "total": 125,
+      "gameLabel": "Cocaine Flamingos Destroyed",
+      "description": "Seuls les flamants au bec noir et blanc comptent. 100 sur 125.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
+      "items": []
+    },
+    {
+      "id": "playlists",
+      "slug": "playlists",
+      "name": "Playlists uniques terminées",
+      "unit": "playlist",
+      "section": "activites",
+      "required": 2,
+      "total": 2,
+      "gameLabel": "Unique Playlists Completed",
+      "description": "Les 2 playlists sont requises.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
+      "items": []
+    },
+    {
+      "id": "styles",
+      "slug": "styles",
+      "name": "Styles découverts",
+      "unit": "style",
+      "section": "activites",
+      "required": 70,
+      "total": 79,
+      "gameLabel": "Discovered Styles",
+      "description": "Tenues et looks à découvrir : 70 sur 79.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
+      "items": []
+    },
+    {
+      "id": "courses",
+      "slug": "courses",
+      "name": "Courses gagnées",
+      "unit": "course",
+      "section": "activites",
+      "required": 30,
+      "total": 40,
+      "gameLabel": "Unique Races Won",
+      "description": "30 courses différentes à remporter sur 40.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
+      "items": []
+    },
+    {
+      "id": "defis-course",
+      "slug": "defis-de-course-or",
+      "name": "Défis de course en or",
+      "unit": "médaille",
+      "section": "activites",
+      "required": 10,
+      "total": 13,
+      "gameLabel": "Race Challenge Gold Medals",
+      "description": "Le nombre requis varie selon les sources (10 ou plus) : à confirmer en jeu.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
+      "items": []
+    },
+    {
+      "id": "tir",
+      "slug": "stand-de-tir-or",
+      "name": "Médailles d'or au stand de tir",
+      "unit": "médaille",
+      "section": "activites",
+      "required": 42,
+      "total": 42,
+      "gameLabel": "Shooting Range Gold Medals",
+      "description": "Toutes les épreuves du stand de tir en or.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
+      "items": []
+    },
+    {
+      "id": "jeux-video",
+      "slug": "jeux-video",
+      "name": "Jeux vidéo joués",
+      "unit": "jeu",
+      "section": "activites",
+      "required": 4,
+      "total": 4,
+      "gameLabel": "Video Games Played",
+      "description": "Lancer chacun des 4 jeux une fois suffit.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
+      "items": []
+    },
+    {
+      "id": "billard",
+      "slug": "billard",
+      "name": "Adversaires battus au billard",
+      "unit": "adversaire",
+      "section": "activites",
+      "required": 5,
+      "total": 7,
+      "gameLabel": "Pool Opponents Defeated",
+      "description": "5 adversaires différents sur 7.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
+      "items": []
+    },
+    {
+      "id": "mini-golf",
+      "slug": "mini-golf",
+      "name": "Parcours de mini-golf",
+      "unit": "parcours",
+      "section": "activites",
+      "required": 2,
+      "total": 3,
+      "gameLabel": "Mini Golf Locations Played",
+      "description": "Seuls les 3 mini-golfs comptent, pas les grands parcours de golf.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
+      "items": []
+    },
+    {
+      "id": "basket",
+      "slug": "paniers-de-basket",
+      "name": "Paniers de basket",
+      "unit": "panier",
+      "section": "activites",
+      "required": 90,
+      "total": 100,
+      "gameLabel": "Basketball Hoops",
+      "description": "90 paniers différents : marquer 90 fois au même endroit ne compte pas.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
+      "items": []
+    },
+    {
+      "id": "drones",
+      "slug": "courses-de-drones",
+      "name": "Contre-la-montre en drone",
+      "unit": "épreuve",
+      "section": "activites",
+      "required": 42,
+      "total": 42,
+      "gameLabel": "Drone Time Trials Completed",
+      "description": "Les 42 épreuves sont requises, avec le temps de référence sur une partie d'entre elles.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
       "items": []
     },
     {
@@ -31,28 +1397,47 @@
       "slug": "cascades",
       "name": "Cascades",
       "unit": "cascade",
-      "total": 300,
-      "description": "Les sauts et cascades repérés sur la carte.",
-      "reliability": { "status": "rumor" },
-      "items": [
-        { "id": "cascade-145", "n": 145, "title": "Cascade 145", "where": "Quai de chargement, port", "reliability": { "status": "verified", "verifiedAt": "2026-11-19" } },
-        { "id": "cascade-146", "n": 146, "title": "Cascade 146", "where": "Toit de parking, centre-ville", "reliability": { "status": "verified", "verifiedAt": "2026-11-19" } },
-        { "id": "cascade-147", "n": 147, "title": "Cascade 147", "where": "Rampe de chantier, autoroute nord", "reliability": { "status": "verified", "verifiedAt": "2026-11-19" } },
-        { "id": "cascade-148", "n": 148, "title": "Cascade 148", "where": "Toit d'entrepôt, zone portuaire", "reliability": { "status": "verified", "verifiedAt": "2026-11-19" } },
-        { "id": "cascade-149", "n": 149, "title": "Cascade 149", "where": "Pont-levis, centre-ville", "reliability": { "status": "rumor" } },
-        { "id": "cascade-150", "n": 150, "title": "Cascade 150", "where": "Parking à étages, quartier d'affaires", "reliability": { "status": "verified", "verifiedAt": "2026-11-19" } },
-        { "id": "cascade-151", "n": 151, "title": "Cascade 151", "where": "Digue du marais", "spoiler": true, "reliability": { "status": "verified", "verifiedAt": "2026-11-19" } },
-        { "id": "cascade-152", "n": 152, "title": "Cascade 152", "where": "Piste abandonnée", "spoiler": true, "reliability": { "status": "rumor" } }
-      ]
+      "section": "activites",
+      "required": 300,
+      "total": 397,
+      "gameLabel": "Stunts Completed",
+      "description": "Sauts et cascades : 300 sur 397.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
+      "items": []
     },
     {
-      "id": "animaux",
-      "slug": "animaux",
-      "name": "Animaux étudiés",
-      "unit": "animal",
-      "total": 100,
-      "description": "Les espèces à observer.",
-      "reliability": { "status": "rumor" },
+      "id": "defis",
+      "slug": "defis",
+      "name": "Défis terminés",
+      "unit": "défi",
+      "section": "activites",
+      "required": 70,
+      "total": 80,
+      "gameLabel": "Challenges Completed",
+      "description": "70 défis sur 80.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
+      "items": []
+    },
+    {
+      "id": "bret",
+      "slug": "cibles-de-bret",
+      "name": "Cibles de Bret",
+      "unit": "cible",
+      "section": "activites",
+      "required": 15,
+      "total": 15,
+      "gameLabel": "Bret's Target Decks",
+      "description": "Les 15 sont requises.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
       "items": []
     },
     {
@@ -60,10 +1445,105 @@
       "slug": "vehicules-scannes",
       "name": "Véhicules scannés",
       "unit": "véhicule",
-      "total": 200,
-      "description": "Les modèles de base à scanner.",
-      "reliability": { "status": "rumor" },
+      "section": "decouverte",
+      "required": 200,
+      "total": 277,
+      "gameLabel": "Base Model Vehicles Scanned",
+      "description": "Modèles de base uniquement : 200 sur 277. Les versions spéciales (« Standout ») ne comptent pas.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
       "items": []
+    },
+    {
+      "id": "armes",
+      "slug": "armes",
+      "name": "Armes trouvées",
+      "unit": "arme",
+      "section": "decouverte",
+      "required": 50,
+      "total": 66,
+      "gameLabel": "Standard Issue Weapons Found",
+      "description": "Tenir chaque arme en main une fois suffit : 50 sur 66.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
+      "items": []
+    },
+    {
+      "id": "animaux",
+      "slug": "animaux",
+      "name": "Animaux étudiés",
+      "unit": "animal",
+      "section": "decouverte",
+      "required": 100,
+      "total": 255,
+      "gameLabel": "Animals Studied",
+      "description": "Chaque race de chien et de chat compte à part. 100 sur 255.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
+      "items": []
+    },
+    {
+      "id": "reventes",
+      "slug": "reventes",
+      "name": "Reventes au receleur",
+      "unit": "objectif",
+      "section": "histoire",
+      "required": 4,
+      "total": 4,
+      "gameLabel": "Fenced",
+      "description": "Montants à atteindre en revendant au receleur. Coche chaque objectif une fois le montant atteint.",
+      "reliability": {
+        "status": "rumor",
+        "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+      },
+      "items": [
+        {
+          "id": "revente-stupefiants",
+          "n": 1,
+          "title": "Stupéfiants : 100 000 $",
+          "where": "Dans le jeu : Narcotics Fenced",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+          }
+        },
+        {
+          "id": "revente-bijoux",
+          "n": 2,
+          "title": "Bijoux : 100 000 $",
+          "where": "Dans le jeu : Jewelry Fenced",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+          }
+        },
+        {
+          "id": "revente-billets",
+          "n": 3,
+          "title": "Billets marqués : 250 000 $",
+          "where": "Dans le jeu : Marked Bills Fenced",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+          }
+        },
+        {
+          "id": "revente-vehicules",
+          "n": 4,
+          "title": "Véhicules : 200 000 $",
+          "where": "Dans le jeu : Vehicles Fenced",
+          "reliability": {
+            "status": "rumor",
+            "source": "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"
+          }
+        }
+      ]
     }
   ]
 }

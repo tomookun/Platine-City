@@ -29,11 +29,11 @@ export default function Home() {
 
       <AdSlot id="home-bas" />
 
-      {game.sample && (
-        <p className="rounded-case border border-soleil/60 px-3 py-2 text-[13px] text-soleil">
-          Données d&apos;exemple : la liste réelle sera saisie après vérification en jeu.
-        </p>
-      )}
+      <p className="rounded-case border border-soleil/60 px-3 py-2 text-[13px] text-soleil">
+        {game.sample
+          ? "Données d'exemple : la liste réelle sera saisie après vérification en jeu."
+          : `Données mises à jour le ${game.updatedAt.split("-").reverse().join("/")}. Le jeu vient de sortir : les chiffres sont recoupés entre plusieurs sources et confirmés en jeu au fur et à mesure.`}
+      </p>
     </div>
   );
 }

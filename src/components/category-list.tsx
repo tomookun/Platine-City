@@ -8,31 +8,46 @@ import { useProgress } from "@/lib/progress-store";
 export function CategoryList() {
   const progress = useProgress();
   return (
-    <ul className="border-b border-ligne">
-      {game.categories.map((cat) => {
-        const r = progress ? categoryProgress(progress, cat) : null;
-        const complete = r !== null && r.done === r.total;
+    <div className="flex flex-col gap-6">
+      {game.sections.map((section) => {
+        const cats = game.categories.filter((c) => c.section === section.id);
+        if (cats.length === 0) return null;
         return (
-          <li key={cat.id} className="border-t border-ligne">
-            <Link
-              href={categoryPath(cat.slug)}
-              className="grid min-h-[64px] grid-cols-[1fr_auto] items-center gap-x-3 gap-y-1.5 py-3"
-            >
-              <span className="text-[17px] font-semibold">{cat.name}</span>
-              <span className="tabular text-[15px] text-brume">
-                {r ? `${r.done} / ${r.total}` : `– / ${cat.total}`}
-              </span>
-              <span className="col-span-2 h-1 rounded-full bg-ligne" aria-hidden="true">
-                <span
-                  className="block h-1 rounded-full bg-lagon transition-[width] duration-500"
-                  style={{ width: `${r ? (r.done / r.total) * 100 : 0}%` }}
-                />
-              </span>
-              {complete && <span className="sr-only">Terminé</span>}
-            </Link>
-          </li>
+          <section key={section.id} aria-labelledby={`section-${section.id}`}>
+            <h2 id={`section-${section.id}`} className="mb-1 font-display text-[25px] font-bold">
+              {section.name}
+            </h2>
+            <ul className="border-b border-ligne">
+              {cats.map((cat) => {
+                const r = progress ? categoryProgress(progress, cat) : null;
+                const complete = r !== null && r.done === r.total;
+                const bonus = r !== null && r.all > r.total;
+                return (
+                  <li key={cat.id} className="border-t border-ligne">
+                    <Link
+                      href={categoryPath(cat.slug)}
+                      className="grid min-h-[64px] grid-cols-[1fr_auto] items-center gap-x-3 gap-y-1.5 py-3"
+                    >
+                      <span className="text-[17px] font-semibold">{cat.name}</span>
+                      <span className={`tabular text-[15px] ${complete ? "font-bold text-lagon" : "text-brume"}`}>
+                        {r ? `${r.done} / ${r.total}` : `– / ${cat.required}`}
+                        {bonus && <span className="text-[13px] font-normal text-brume"> (+{r.all - r.total})</span>}
+                      </span>
+                      <span className="col-span-2 h-1 rounded-full bg-ligne" aria-hidden="true">
+                        <span
+                          className="block h-1 rounded-full bg-lagon transition-[width] duration-500"
+                          style={{ width: `${r ? (r.done / r.total) * 100 : 0}%` }}
+                        />
+                      </span>
+                      {complete && <span className="sr-only">Terminé</span>}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
         );
       })}
-    </ul>
+    </div>
   );
 }

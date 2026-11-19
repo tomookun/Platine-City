@@ -14,7 +14,7 @@ export function HomeDashboard() {
 
   const resume = progress
     ? (game.categories.find((c) => c.id === progress.lastCategoryId) ??
-      game.categories.find((c) => categoryProgress(progress, c).done < c.total) ??
+      game.categories.find((c) => categoryProgress(progress, c).done < categoryProgress(progress, c).total) ??
       game.categories[0])
     : game.categories[0];
   const r = progress ? categoryProgress(progress, resume) : null;
@@ -41,7 +41,7 @@ export function HomeDashboard() {
             {global ? `${global.percent} %` : "– %"}
           </span>
           <span className="text-[15px] text-brume">
-            {global ? `${nf.format(global.done)} éléments sur ${nf.format(global.total)}` : "Chargement de ta progression"}
+            {global ? `${nf.format(global.done)} objectifs sur ${nf.format(global.total)}` : "Chargement de ta progression"}
           </span>
         </div>
       </section>
@@ -51,7 +51,7 @@ export function HomeDashboard() {
           <h2 id="reprendre" className="text-xl font-bold">
             <Link href={categoryPath(resume.slug)}>{resume.name}</Link>
           </h2>
-          <span className="tabular text-xl font-bold">{r ? `${r.done} / ${r.total}` : `– / ${resume.total}`}</span>
+          <span className="tabular text-xl font-bold">{r ? `${r.done} / ${r.total}` : `– / ${resume.required}`}</span>
         </div>
         <div className="h-1.5 rounded-full bg-ligne" aria-hidden="true">
           <div
@@ -71,7 +71,7 @@ export function HomeDashboard() {
           </button>
           <button
             type="button"
-            disabled={!progress || r?.done === r?.total}
+            disabled={!progress || r?.all === r?.max}
             onClick={() => updateProgress((p) => increment(resume, p, 1))}
             className="h-12 flex-1 rounded-[10px] bg-rose text-[17px] font-bold text-nuit transition-transform active:scale-[0.97] disabled:opacity-40"
           >

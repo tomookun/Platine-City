@@ -92,16 +92,25 @@ const ratio = (done: number, total: number): Ratio => ({
   percent: total === 0 ? 0 : Math.floor((done / total) * 100),
 });
 
-export const categoryProgress = (p: Progress, cat: Category) =>
-  ratio(doneInCategory(p, cat), cat.total);
+/** Objectif du 100 % : `required`, jamais plus que ce qui existe. */
+const goal = (cat: Category) => Math.min(cat.required, cat.total);
 
-/** % global = éléments faits / éléments totaux, toutes catégories. */
+/**
+ * Progression vers le 100 % : `done` plafonné à l'objectif, `total` = objectif.
+ * `all` / `max` : compteur brut, jusqu'au total du jeu (bonus au-delà du requis).
+ */
+export const categoryProgress = (p: Progress, cat: Category) => {
+  const all = doneInCategory(p, cat);
+  return { ...ratio(Math.min(all, goal(cat)), goal(cat)), all, max: cat.total };
+};
+
+/** % global = objectifs atteints / objectifs requis, toutes catégories. */
 export function globalProgress(data: GameData, p: Progress): Ratio {
   let done = 0;
   let total = 0;
   for (const cat of data.categories) {
-    done += doneInCategory(p, cat);
-    total += cat.total;
+    done += Math.min(doneInCategory(p, cat), goal(cat));
+    total += goal(cat);
   }
   return ratio(done, total);
 }

@@ -46,8 +46,9 @@ export async function submitContribution(
     data_version: game.version,
   };
 
-  const url = process.env.SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  // Accepte « https://xxx.supabase.co » comme « https://xxx.supabase.co/rest/v1/ ».
+  const url = process.env.SUPABASE_URL?.trim().replace(/\/+$/, "").replace(/\/rest\/v1$/, "");
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
 
   if (!url || !key) {
     if (process.env.NODE_ENV !== "production") {

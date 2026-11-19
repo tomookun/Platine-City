@@ -17,6 +17,9 @@ import {
   useSettings,
 } from "@/lib/progress-store";
 import { game } from "@/data/game";
+import { changelog } from "@/data/changelog";
+import { latestChangeFor, markCategorySeen } from "@/lib/seen";
+import { updateSeen } from "@/lib/seen-store";
 import { ReliabilityBadge } from "./reliability-badge";
 
 type Filter = "todo" | "done" | "all";
@@ -47,6 +50,11 @@ export function ChecklistView({ slug }: { slug: string }) {
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useEffect(() => () => clearTimeout(timer.current), []);
+  // Ouvrir la catégorie éteint sa pastille « Nouveau ».
+  useEffect(() => {
+    updateSeen((s) => markCategorySeen(s, cat.id));
+  }, [cat.id]);
+  const lastChange = latestChangeFor(cat.id, changelog);
 
   const r = progress ? categoryProgress(progress, cat) : null;
 
@@ -117,6 +125,20 @@ export function ChecklistView({ slug }: { slug: string }) {
           </p>
         )}
         <ReliabilityBadge value={cat.reliability} />
+        {lastChange && (
+          <Link
+            href="/nouveautes"
+            className="text-[13px] text-brume underline-offset-4 hover:underline"
+          >
+            Dernière mise à jour le{" "}
+            {new Date(lastChange.at).toLocaleDateString("fr-FR", {
+              day: "numeric",
+              month: "long",
+              timeZone: "Europe/Paris",
+            })}{" "}
+            : {lastChange.title}
+          </Link>
+        )}
       </header>
 
       <section

@@ -3,12 +3,26 @@ import { AdSlot } from "@/components/ad-slot";
 import { CategoryList } from "@/components/category-list";
 import { GuideList } from "@/components/guide-list";
 import { HomeDashboard } from "@/components/home-dashboard";
+import { NewsFeed } from "@/components/news-feed";
 import { game } from "@/data/game";
 
 export default function Home() {
   return (
     <div className="flex flex-col gap-6">
       <HomeDashboard />
+
+      <section aria-labelledby="neuf" className="flex flex-col gap-1">
+        <h2 id="neuf" className="font-display text-[25px] font-bold">
+          Quoi de neuf
+        </h2>
+        <NewsFeed limit={3} />
+        <Link
+          href="/nouveautes"
+          className="inline-flex min-h-11 items-center text-[15px] text-rose underline underline-offset-4"
+        >
+          Toutes les nouveautés
+        </Link>
+      </section>
 
       <section aria-labelledby="cent" className="flex flex-col">
         <h2 id="cent" className="mb-2 font-display text-[25px] font-bold">
@@ -22,7 +36,10 @@ export default function Home() {
           Guides vérifiés
         </h2>
         <GuideList limit={3} />
-        <Link href="/contribuer" className="text-[15px] text-rose underline underline-offset-4">
+        <Link
+          href="/contribuer"
+          className="text-[15px] text-rose underline underline-offset-4"
+        >
           Tu as une info ? Propose-la
         </Link>
       </section>

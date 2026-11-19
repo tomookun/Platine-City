@@ -21,9 +21,11 @@ npm run build && npm start   # version de production (service worker actif)
 
 | Quoi | Où |
 |---|---|
-| Données de jeu (à remplacer, `"sample": true`) | `src/data/game.json` |
+| Données de jeu (régénérer : `node scripts/build-game-data.mjs src/data/game.json`) | `src/data/game.json` |
 | Logique de progression / sauvegarde | `src/lib/progress.ts`, `src/lib/storage.ts` |
 | Guides (ajouter une entrée, copier `_modele`) | `src/content/guides.ts` |
+| Journal « Quoi de neuf » (ajouter une entrée en haut à chaque mise à jour) | `src/data/changelog.ts` |
+| Sources des données de jeu | `docs/sources-donnees.md` |
 | Table des contributions | `supabase/migrations/0001_contributions.sql` |
 | Design system | `docs/DESIGN.md` |
 | Recherche concurrents | `docs/recherche-concurrents.md` |

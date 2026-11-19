@@ -2,6 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { changelog } from "@/data/changelog";
+import { game } from "@/data/game";
+import { isCategoryNew } from "@/lib/seen";
+import { useSeen } from "@/lib/seen-store";
 
 const tabs = [
   {
@@ -12,7 +16,9 @@ const tabs = [
   {
     href: "/gta-6",
     label: "Checklist",
-    icon: <path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2" />,
+    icon: (
+      <path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2" />
+    ),
   },
   {
     href: "/guides",
@@ -28,6 +34,10 @@ const tabs = [
 
 export function BottomNav() {
   const pathname = usePathname();
+  const seen = useSeen();
+  const checklistFresh =
+    seen !== null &&
+    game.categories.some((c) => isCategoryNew(seen, c.id, changelog));
   return (
     <nav
       aria-label="Navigation principale"
@@ -35,20 +45,42 @@ export function BottomNav() {
     >
       <ul className="mx-auto grid h-[72px] max-w-xl grid-cols-4">
         {tabs.map((t) => {
-          const active = t.href === "/" ? pathname === "/" : pathname.startsWith(t.href);
+          const active =
+            t.href === "/" ? pathname === "/" : pathname.startsWith(t.href);
           return (
             <li key={t.href}>
               <Link
                 href={t.href}
                 aria-current={active ? "page" : undefined}
                 className={`flex h-full flex-col items-center justify-center gap-1 border-t-[3px] text-[13px] ${
-                  active ? "border-rose font-semibold text-sable" : "border-transparent text-brume"
+                  active
+                    ? "border-rose font-semibold text-sable"
+                    : "border-transparent text-brume"
                 }`}
               >
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                  {t.icon}
-                </svg>
+                <span className="relative">
+                  <svg
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    aria-hidden="true"
+                  >
+                    {t.icon}
+                  </svg>
+                  {t.href === "/gta-6" && checklistFresh && (
+                    <span
+                      className="absolute -right-1.5 -top-1 size-2.5 rounded-full bg-rose ring-2 ring-surface-2"
+                      aria-hidden="true"
+                    />
+                  )}
+                </span>
                 {t.label}
+                {t.href === "/gta-6" && checklistFresh && (
+                  <span className="sr-only"> (nouveautés)</span>
+                )}
               </Link>
             </li>
           );

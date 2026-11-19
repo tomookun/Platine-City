@@ -17,3 +17,7 @@ create index if not exists contributions_status_idx on public.contributions (sta
 
 -- Aucun accès public : seul le serveur (clé service_role) écrit et lit.
 alter table public.contributions enable row level security;
+
+-- Droits explicites : le public n'a rien, la clé serveur lit et écrit.
+revoke all on public.contributions from anon, authenticated;
+grant select, insert, update, delete on public.contributions to service_role;

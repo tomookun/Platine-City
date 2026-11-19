@@ -33,7 +33,7 @@ npm run build && npm start   # version de production (service worker actif)
 
 | Nom | Rôle |
 |---|---|
-| `NEXT_PUBLIC_SITE_URL` | URL publique, ex. `https://platinecity.fr` (sitemap, canonical) |
+| `NEXT_PUBLIC_SITE_URL` | URL publique, ex. `https://platinecity.fr` (sitemap, canonical). Sans elle, l'adresse `.vercel.app` est utilisée |
 | `SUPABASE_URL` | URL du projet Supabase |
 | `SUPABASE_SERVICE_ROLE_KEY` | Clé serveur, **secrète**, jamais préfixée `NEXT_PUBLIC_` |
 | `NEXT_PUBLIC_SHOW_AD_SLOTS` | `1` pour afficher les emplacements pub (désactivés par défaut) |

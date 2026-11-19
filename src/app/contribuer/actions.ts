@@ -68,7 +68,11 @@ export async function submitContribution(
       },
       body: JSON.stringify(row),
     });
-    if (!res.ok) throw new Error(`Supabase ${res.status}`);
+    if (!res.ok) {
+      // Message d'erreur Supabase (jamais la clé), pour diagnostiquer dans les logs Vercel.
+      const detail = (await res.text().catch(() => "")).slice(0, 300);
+      throw new Error(`Supabase ${res.status} ${detail}`);
+    }
   } catch (e) {
     console.error("Échec d'enregistrement d'une contribution", e);
     return { status: "error", message: "L’envoi a échoué. Vérifie ta connexion et réessaie.", errors: {}, values: keep(form) };

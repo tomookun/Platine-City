@@ -72,7 +72,9 @@ export async function submitContribution(
     if (!res.ok) {
       // Message d'erreur Supabase (jamais la clé), pour diagnostiquer dans les logs Vercel.
       const detail = (await res.text().catch(() => "")).slice(0, 300);
-      throw new Error(`Supabase ${res.status} ${detail}`);
+      // Type et longueur de la clé seulement (jamais sa valeur), pour repérer une mauvaise clé collée.
+      const kind = /^sb_secret_/.test(key) ? "sb_secret" : /^sb_publishable_/.test(key) ? "sb_publishable" : /^eyJ/.test(key) ? "jwt" : "inconnu";
+      throw new Error(`Supabase ${res.status} ${detail} [clé: ${kind}, ${key.length} car., hôte: ${new URL(url).host}]`);
     }
   } catch (e) {
     console.error("Échec d'enregistrement d'une contribution", e);

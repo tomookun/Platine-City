@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Big_Shoulders, Figtree } from "next/font/google";
 import { BottomNav } from "@/components/bottom-nav";
+import { MilestoneCelebration } from "@/components/milestone-celebration";
 import { RegisterServiceWorker } from "@/components/register-sw";
 import { LEGAL_NOTICE, SITE_NAME, SITE_URL } from "@/data/game";
 import "./globals.css";
@@ -58,6 +59,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           </footer>
         </div>
         <BottomNav />
+        <MilestoneCelebration />
         <RegisterServiceWorker />
       </body>
     </html>

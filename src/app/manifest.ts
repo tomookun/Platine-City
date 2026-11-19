@@ -1,0 +1,22 @@
+import type { MetadataRoute } from "next";
+import { SITE_NAME } from "@/data/game";
+
+export default function manifest(): MetadataRoute.Manifest {
+  return {
+    name: `${SITE_NAME} : checklist 100 %`,
+    short_name: SITE_NAME,
+    description: "Ta checklist 100 % en français, hors ligne et sans spoilers.",
+    lang: "fr",
+    start_url: "/",
+    scope: "/",
+    display: "standalone",
+    orientation: "portrait",
+    background_color: "#0d1222",
+    theme_color: "#0d1222",
+    icons: [
+      { src: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { src: "/icon-512.png", sizes: "512x512", type: "image/png" },
+      { src: "/icon-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
+    ],
+  };
+}

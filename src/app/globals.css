@@ -1,26 +1,54 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Jetons de DESIGN.md (direction A — Enseigne). Sombre par défaut. */
+@theme {
+  --color-nuit: #0d1222;
+  --color-surface: #161d33;
+  --color-surface-2: #1f2842;
+  --color-ligne: #2b3555;
+  --color-contour: #6b77a3;
+  --color-sable: #f4eee6;
+  --color-brume: #a6aec6;
+  --color-rose: #ff5c93;
+  --color-rose-fonce: #c2185b;
+  --color-lagon: #3de3d3;
+  --color-soleil: #ffb861;
+
+  --font-sans: var(--font-figtree), system-ui, sans-serif;
+  --font-display: var(--font-shoulders), "Arial Narrow", sans-serif;
+
+  --radius-case: 6px;
+  --radius-feuille: 14px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  color-scheme: dark;
+  background: var(--color-nuit);
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-nuit);
+  color: var(--color-sable);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-rose);
+  outline-offset: 2px;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0ms !important;
+    transition-duration: 0ms !important;
+  }
 }

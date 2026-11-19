@@ -1,0 +1,69 @@
+{
+  "version": "2026-11-19.0",
+  "sample": true,
+  "categories": [
+    {
+      "id": "histoire",
+      "slug": "histoire",
+      "name": "Histoire",
+      "unit": "mission",
+      "total": 49,
+      "description": "Les missions principales, dans l'ordre.",
+      "reliability": { "status": "rumor" },
+      "items": [
+        { "id": "histoire-1", "n": 1, "title": "Mission 1", "reliability": { "status": "rumor" } },
+        { "id": "histoire-2", "n": 2, "title": "Mission 2", "spoiler": true, "reliability": { "status": "rumor" } },
+        { "id": "histoire-3", "n": 3, "title": "Mission 3", "spoiler": true, "reliability": { "status": "rumor" } }
+      ]
+    },
+    {
+      "id": "braquages",
+      "slug": "braquages-de-banque",
+      "name": "Braquages de banque",
+      "unit": "braquage",
+      "total": 22,
+      "description": "Chaque banque braquée au moins une fois.",
+      "reliability": { "status": "rumor" },
+      "items": []
+    },
+    {
+      "id": "cascades",
+      "slug": "cascades",
+      "name": "Cascades",
+      "unit": "cascade",
+      "total": 300,
+      "description": "Les sauts et cascades repérés sur la carte.",
+      "reliability": { "status": "rumor" },
+      "items": [
+        { "id": "cascade-145", "n": 145, "title": "Cascade 145", "where": "Quai de chargement, port", "reliability": { "status": "verified", "verifiedAt": "2026-11-19" } },
+        { "id": "cascade-146", "n": 146, "title": "Cascade 146", "where": "Toit de parking, centre-ville", "reliability": { "status": "verified", "verifiedAt": "2026-11-19" } },
+        { "id": "cascade-147", "n": 147, "title": "Cascade 147", "where": "Rampe de chantier, autoroute nord", "reliability": { "status": "verified", "verifiedAt": "2026-11-19" } },
+        { "id": "cascade-148", "n": 148, "title": "Cascade 148", "where": "Toit d'entrepôt, zone portuaire", "reliability": { "status": "verified", "verifiedAt": "2026-11-19" } },
+        { "id": "cascade-149", "n": 149, "title": "Cascade 149", "where": "Pont-levis, centre-ville", "reliability": { "status": "rumor" } },
+        { "id": "cascade-150", "n": 150, "title": "Cascade 150", "where": "Parking à étages, quartier d'affaires", "reliability": { "status": "verified", "verifiedAt": "2026-11-19" } },
+        { "id": "cascade-151", "n": 151, "title": "Cascade 151", "where": "Digue du marais", "spoiler": true, "reliability": { "status": "verified", "verifiedAt": "2026-11-19" } },
+        { "id": "cascade-152", "n": 152, "title": "Cascade 152", "where": "Piste abandonnée", "spoiler": true, "reliability": { "status": "rumor" } }
+      ]
+    },
+    {
+      "id": "animaux",
+      "slug": "animaux",
+      "name": "Animaux étudiés",
+      "unit": "animal",
+      "total": 100,
+      "description": "Les espèces à observer.",
+      "reliability": { "status": "rumor" },
+      "items": []
+    },
+    {
+      "id": "vehicules",
+      "slug": "vehicules-scannes",
+      "name": "Véhicules scannés",
+      "unit": "véhicule",
+      "total": 200,
+      "description": "Les modèles de base à scanner.",
+      "reliability": { "status": "rumor" },
+      "items": []
+    }
+  ]
+}

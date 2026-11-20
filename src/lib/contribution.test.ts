@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { GameData } from "@/data/types";
-import { validateContribution } from "./contribution";
+import { PHOTO_MAX_BYTES, checkPhoto, validateContribution } from "./contribution";
 
 const data: GameData = {
   version: "t",
@@ -66,5 +66,24 @@ describe("validateContribution", () => {
   it("repère le champ piège rempli par un robot", () => {
     const r = validateContribution(form({ ...valid, website: "http://spam.example" }), data);
     expect(r).toEqual({ ok: false, errors: {}, spam: true });
+  });
+});
+
+describe("checkPhoto", () => {
+  const pad = (head: number[]) => new Uint8Array([...head, ...new Array(20).fill(0)]);
+
+  it("reconnaît JPG, PNG et WebP d'après leur contenu", () => {
+    expect(checkPhoto(pad([0xff, 0xd8, 0xff, 0xe0]))).toMatchObject({ ok: true, ext: "jpg" });
+    expect(checkPhoto(pad([0x89, 0x50, 0x4e, 0x47]))).toMatchObject({ ok: true, ext: "png" });
+    const webp = pad([0x52, 0x49, 0x46, 0x46, 0, 0, 0, 0, 0x57, 0x45, 0x42, 0x50]);
+    expect(checkPhoto(webp)).toMatchObject({ ok: true, ext: "webp" });
+  });
+
+  it("refuse un faux fichier image, un fichier vide ou trop lourd", () => {
+    expect(checkPhoto(new TextEncoder().encode("<svg onload=alert(1)>                "))).toMatchObject({ ok: false });
+    expect(checkPhoto(new Uint8Array())).toMatchObject({ ok: false });
+    const big = new Uint8Array(PHOTO_MAX_BYTES + 1);
+    big.set([0xff, 0xd8, 0xff]);
+    expect(checkPhoto(big)).toMatchObject({ ok: false });
   });
 });

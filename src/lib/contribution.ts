@@ -18,25 +18,46 @@ export type Contribution = {
   pseudo: string | null;
 };
 
-export type FieldErrors = Partial<Record<"kind" | "categoryId" | "itemRef" | "message" | "sourceUrl" | "pseudo" | "consent", string>>;
+export type FieldErrors = Partial<
+  Record<
+    | "kind"
+    | "categoryId"
+    | "itemRef"
+    | "message"
+    | "sourceUrl"
+    | "pseudo"
+    | "consent"
+    | "photo",
+    string
+  >
+>;
 
 export type ValidationResult =
   | { ok: true; value: Contribution }
   | { ok: false; errors: FieldErrors; spam?: boolean };
 
-export const LIMITS = { message: [10, 1000], itemRef: 80, sourceUrl: 300, pseudo: 40 } as const;
+export const LIMITS = {
+  message: [10, 1000],
+  itemRef: 80,
+  sourceUrl: 300,
+  pseudo: 40,
+} as const;
 
 const text = (v: FormDataEntryValue | null) =>
   typeof v === "string" ? v.replace(/\s+/g, " ").trim() : "";
 
-export function validateContribution(form: FormData, data: GameData): ValidationResult {
+export function validateContribution(
+  form: FormData,
+  data: GameData,
+): ValidationResult {
   // Champ piège invisible : un humain le laisse vide.
   if (text(form.get("website"))) return { ok: false, errors: {}, spam: true };
 
   const errors: FieldErrors = {};
 
   const kind = text(form.get("kind"));
-  if (!(kind in CONTRIBUTION_KINDS)) errors.kind = "Choisis un type de contribution.";
+  if (!(kind in CONTRIBUTION_KINDS))
+    errors.kind = "Choisis un type de contribution.";
 
   const categoryId = text(form.get("categoryId")) || null;
   if (categoryId && !data.categories.some((c) => c.id === categoryId)) {
@@ -48,9 +69,13 @@ export function validateContribution(form: FormData, data: GameData): Validation
     errors.itemRef = `${LIMITS.itemRef} caractères maximum.`;
   }
 
-  const message = typeof form.get("message") === "string" ? (form.get("message") as string).trim() : "";
+  const message =
+    typeof form.get("message") === "string"
+      ? (form.get("message") as string).trim()
+      : "";
   const [min, max] = LIMITS.message;
-  if (message.length < min) errors.message = `Décris ta contribution en ${min} caractères minimum.`;
+  if (message.length < min)
+    errors.message = `Décris ta contribution en ${min} caractères minimum.`;
   else if (message.length > max) errors.message = `${max} caractères maximum.`;
 
   const sourceUrl = text(form.get("sourceUrl")) || null;
@@ -62,19 +87,69 @@ export function validateContribution(form: FormData, data: GameData): Validation
     } catch {
       valid = false;
     }
-    if (!valid) errors.sourceUrl = "Colle un lien complet qui commence par https://.";
+    if (!valid)
+      errors.sourceUrl = "Colle un lien complet qui commence par https://.";
   }
 
   const pseudo = text(form.get("pseudo")) || null;
-  if (pseudo && pseudo.length > LIMITS.pseudo) errors.pseudo = `${LIMITS.pseudo} caractères maximum.`;
+  if (pseudo && pseudo.length > LIMITS.pseudo)
+    errors.pseudo = `${LIMITS.pseudo} caractères maximum.`;
 
   if (form.get("consent") !== "on") {
-    errors.consent = "Coche la case pour accepter la relecture et la publication.";
+    errors.consent =
+      "Coche la case pour accepter la relecture et la publication.";
   }
 
   if (Object.keys(errors).length > 0) return { ok: false, errors };
   return {
     ok: true,
-    value: { kind: kind as ContributionKind, categoryId, itemRef, message, sourceUrl, pseudo },
+    value: {
+      kind: kind as ContributionKind,
+      categoryId,
+      itemRef,
+      message,
+      sourceUrl,
+      pseudo,
+    },
   };
+}
+
+/** Taille maximale d'une capture, après recompression sur le téléphone. */
+export const PHOTO_MAX_BYTES = 3.5 * 1024 * 1024;
+
+const PHOTO_TYPES = [
+  {
+    ext: "jpg",
+    type: "image/jpeg",
+    magic: (b: Uint8Array) => b[0] === 0xff && b[1] === 0xd8 && b[2] === 0xff,
+  },
+  {
+    ext: "png",
+    type: "image/png",
+    magic: (b: Uint8Array) =>
+      b[0] === 0x89 && b[1] === 0x50 && b[2] === 0x4e && b[3] === 0x47,
+  },
+  {
+    ext: "webp",
+    type: "image/webp",
+    magic: (b: Uint8Array) =>
+      String.fromCharCode(b[0], b[1], b[2], b[3]) === "RIFF" &&
+      String.fromCharCode(b[8], b[9], b[10], b[11]) === "WEBP",
+  },
+] as const;
+
+export type PhotoCheck =
+  { ok: true; ext: string; type: string } | { ok: false; error: string };
+
+/**
+ * Vérifie une capture d'après son contenu réel (les premiers octets), pas
+ * d'après son nom ou le type annoncé par le navigateur.
+ */
+export function checkPhoto(bytes: Uint8Array): PhotoCheck {
+  if (bytes.length === 0) return { ok: false, error: "Le fichier est vide." };
+  if (bytes.length > PHOTO_MAX_BYTES)
+    return { ok: false, error: "Image trop lourde (3,5 Mo maximum)." };
+  const t = PHOTO_TYPES.find((p) => bytes.length >= 12 && p.magic(bytes));
+  if (!t) return { ok: false, error: "Envoie une image JPG, PNG ou WebP." };
+  return { ok: true, ext: t.ext, type: t.type };
 }

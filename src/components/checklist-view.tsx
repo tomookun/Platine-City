@@ -24,12 +24,14 @@ import { getDetails } from "@/data/details";
 import { CategoryIcon } from "./category-icon";
 import { ItemSheet } from "./item-sheet";
 import { ReliabilityBadge } from "./reliability-badge";
+import { formatDay } from "@/i18n/locale";
+import { useI18n } from "@/i18n/locale-context";
 
 type Filter = "todo" | "done" | "all";
-const filters: [Filter, string][] = [
-  ["todo", "À faire"],
-  ["done", "Faites"],
-  ["all", "Toutes"],
+const filters: [Filter, string, string][] = [
+  ["todo", "À faire", "To do"],
+  ["done", "Faites", "Done"],
+  ["all", "Toutes", "All"],
 ];
 
 const normalize = (s: string) =>
@@ -39,7 +41,8 @@ const normalize = (s: string) =>
     .toLowerCase();
 
 export function ChecklistView({ slug }: { slug: string }) {
-  const cat = getCategory(slug)!;
+  const { t, p: paths, locale } = useI18n();
+  const cat = getCategory(slug, locale)!;
   const progress = useProgress();
   const { spoilerFree } = useSettings();
   const [filter, setFilter] = useState<Filter>("todo");
@@ -75,7 +78,9 @@ export function ChecklistView({ slug }: { slug: string }) {
     setTouched((t) => new Set(t).add(id));
     commit(
       (p) => toggleItem(game, p, id),
-      `${label} ${done ? "décoché" : "coché"}`,
+      done
+        ? t(`${label} décoché`, `${label} unticked`)
+        : t(`${label} coché`, `${label} ticked`),
     );
   }
 
@@ -104,10 +109,10 @@ export function ChecklistView({ slug }: { slug: string }) {
       <header className="flex flex-col gap-2.5">
         <div className="-my-2 flex items-center justify-between">
           <Link
-            href="/gta-6"
+            href={paths.checklist}
             className="inline-flex min-h-11 items-center text-[15px] text-brume"
           >
-            Ton 100 %
+            {t("Ton 100 %", "Your 100%")}
           </Link>
           <span className="flex size-11 items-center justify-center rounded-feuille bg-surface text-rose">
             <CategoryIcon id={cat.id} size={26} />
@@ -128,11 +133,25 @@ export function ChecklistView({ slug }: { slug: string }) {
         </div>
         <p className="text-[13px] text-brume">
           {cat.required < cat.total
-            ? `${cat.required} requis pour le 100 %, sur ${cat.total} dans le jeu.`
+            ? t(
+                `${cat.required} requis pour le 100 %, sur ${cat.total} dans le jeu.`,
+                `${cat.required} required for 100%, out of ${cat.total} in the game.`,
+              )
             : cat.totalKnown === false
-              ? `${cat.required} requis pour le 100 %. Total dans le jeu encore inconnu.`
-              : `Les ${cat.total} sont requis pour le 100 %.`}
-          {r && r.all > r.total && ` Bonus : ${r.all - r.total} en plus.`}
+              ? t(
+                  `${cat.required} requis pour le 100 %. Total dans le jeu encore inconnu.`,
+                  `${cat.required} required for 100%. In-game total not known yet.`,
+                )
+              : t(
+                  `Les ${cat.total} sont requis pour le 100 %.`,
+                  `All ${cat.total} are required for 100%.`,
+                )}
+          {r &&
+            r.all > r.total &&
+            t(
+              ` Bonus : ${r.all - r.total} en plus.`,
+              ` Bonus: ${r.all - r.total} extra.`,
+            )}
         </p>
         <div className="h-1.5 rounded-full bg-ligne" aria-hidden="true">
           <div
@@ -143,43 +162,50 @@ export function ChecklistView({ slug }: { slug: string }) {
         <p className="text-brume">{cat.description}</p>
         {cat.gameLabel && cat.items.length === 0 && (
           <p className="text-[13px] text-brume">
-            Dans le menu du jeu : <span lang="en">{cat.gameLabel}</span>
+            {t("Dans le menu du jeu : ", "In the game menu: ")}
+            <span lang="en">{cat.gameLabel}</span>
           </p>
         )}
         <ReliabilityBadge value={cat.reliability} />
         {lastChange && (
           <Link
-            href="/nouveautes"
+            href={paths.news}
             className="text-[13px] text-brume underline-offset-4 hover:underline"
           >
-            Dernière mise à jour le{" "}
-            {new Date(lastChange.at).toLocaleDateString("fr-FR", {
-              day: "numeric",
-              month: "long",
-              timeZone: "Europe/Paris",
-            })}{" "}
-            : {lastChange.title}
+            {t("Dernière mise à jour le ", "Last updated on ")}
+            {formatDay(locale, lastChange.at)}
+            {t(" : ", ": ")}
+            {locale === "en" ? lastChange.en.title : lastChange.title}
           </Link>
         )}
       </header>
 
       <section
-        aria-label="Compteur"
+        aria-label={t("Compteur", "Counter")}
         className="flex items-center gap-3 rounded-feuille bg-surface p-3"
       >
         <span className="flex-1 text-[15px] text-brume">
           {cat.items.length === 0
-            ? "Compte ta progression avec + et −."
-            : "Ajuste le compteur si tu en as fait hors liste."}
+            ? t(
+                "Compte ta progression avec + et −.",
+                "Track your progress with + and −.",
+              )
+            : t(
+                "Ajuste le compteur si tu en as fait hors liste.",
+                "Adjust the counter if you did some off the list.",
+              )}
         </span>
         <button
           type="button"
-          aria-label={`Retirer 1 ${cat.unit}`}
+          aria-label={t(`Retirer 1 ${cat.unit}`, `Remove 1 ${cat.unit}`)}
           disabled={!progress || r?.done === 0}
           onClick={() =>
             commit(
               (p) => increment(cat, p, -1),
-              `Compteur : 1 ${cat.unit} en moins`,
+              t(
+                `Compteur : 1 ${cat.unit} en moins`,
+                `Counter: 1 ${cat.unit} less`,
+              ),
             )
           }
           className="h-12 w-12 rounded-[10px] border border-contour text-2xl active:scale-95 disabled:opacity-40"
@@ -188,12 +214,15 @@ export function ChecklistView({ slug }: { slug: string }) {
         </button>
         <button
           type="button"
-          aria-label={`Ajouter 1 ${cat.unit}`}
+          aria-label={t(`Ajouter 1 ${cat.unit}`, `Add 1 ${cat.unit}`)}
           disabled={!progress || r?.all === r?.max}
           onClick={() =>
             commit(
               (p) => increment(cat, p, 1),
-              `Compteur : 1 ${cat.unit} en plus`,
+              t(
+                `Compteur : 1 ${cat.unit} en plus`,
+                `Counter: 1 more ${cat.unit}`,
+              ),
             )
           }
           className="h-12 w-12 rounded-[10px] bg-rose text-2xl font-bold text-nuit active:scale-95 disabled:opacity-40"
@@ -204,21 +233,23 @@ export function ChecklistView({ slug }: { slug: string }) {
 
       {cat.items.length === 0 ? (
         <p className="rounded-feuille border border-ligne p-4 text-brume">
-          La liste détaillée des emplacements arrive après vérification en jeu.
-          En attendant, utilise le compteur, ou{" "}
+          {t(
+            "La liste détaillée des emplacements arrive après vérification en jeu. En attendant, utilise le compteur, ou ",
+            "The detailed location list is coming once checked in game. Meanwhile, use the counter, or ",
+          )}
           <Link
-            href="/contribuer"
+            href={paths.contribute}
             className="text-rose underline underline-offset-4"
           >
-            signale un emplacement
+            {t("signale un emplacement", "report a location")}
           </Link>
           .
         </p>
       ) : items.length === 0 ? (
         <p className="py-6 text-brume">
           {filter === "todo" && !q
-            ? "Tout est coché ici. Bravo."
-            : "Aucun élément ne correspond."}
+            ? t("Tout est coché ici. Bravo.", "Everything's ticked here. Nice.")
+            : t("Aucun élément ne correspond.", "Nothing matches.")}
         </p>
       ) : (
         <ul>
@@ -234,21 +265,24 @@ export function ChecklistView({ slug }: { slug: string }) {
                   type="button"
                   onClick={() => setOpenId(it.id)}
                   aria-haspopup="dialog"
-                  aria-label={`Voir la fiche : ${hidden ? `${cat.unit} ${it.n}` : it.title}`}
+                  aria-label={t(
+                    `Voir la fiche : ${hidden ? `${cat.unit} ${it.n}` : it.title}`,
+                    `Open details: ${hidden ? `${cat.unit} ${it.n}` : it.title}`,
+                  )}
                   className="flex min-h-16 flex-1 flex-col justify-center gap-1 py-2.5 pr-2 text-left"
                 >
                   <span
                     className={`text-[17px] font-semibold ${done ? "text-brume line-through decoration-1" : ""}`}
                   >
                     {hidden
-                      ? `${cat.unit[0].toUpperCase()}${cat.unit.slice(1)} ${it.n} (titre masqué)`
+                      ? `${cat.unit[0].toUpperCase()}${cat.unit.slice(1)} ${it.n} ${t("(titre masqué)", "(title hidden)")}`
                       : it.title}
                   </span>
                   <span className="flex flex-wrap items-center gap-x-2 text-[13px] text-brume">
                     {it.where && <span>{it.where}</span>}
                     {!hidden && getDetails(it.id)?.media?.length ? (
                       <span className="font-semibold text-lagon">
-                        ▶ Vidéo / photo
+                        ▶ {t("Vidéo / photo", "Video / photo")}
                       </span>
                     ) : null}
                   </span>
@@ -263,7 +297,7 @@ export function ChecklistView({ slug }: { slug: string }) {
                   aria-label={hidden ? `${cat.unit} ${it.n}` : it.title}
                   disabled={!progress}
                   onClick={() =>
-                    toggle(it.id, hidden ? `N° ${it.n}` : it.title, done)
+                    toggle(it.id, hidden ? `#${it.n}` : it.title, done)
                   }
                   className="flex w-14 shrink-0 items-center justify-end"
                 >
@@ -302,7 +336,7 @@ export function ChecklistView({ slug }: { slug: string }) {
           openItem &&
           toggle(
             openItem.id,
-            openHidden ? `N° ${openItem.n}` : openItem.title,
+            openHidden ? `#${openItem.n}` : openItem.title,
             openDone,
           )
         }
@@ -323,7 +357,7 @@ export function ChecklistView({ slug }: { slug: string }) {
             }}
             className="h-10 px-3 font-bold text-rose-fonce"
           >
-            Annuler
+            {t("Annuler", "Undo")}
           </button>
         </div>
       )}
@@ -331,8 +365,12 @@ export function ChecklistView({ slug }: { slug: string }) {
       {cat.items.length > 0 && (
         <div className="fixed inset-x-0 bottom-[calc(72px+env(safe-area-inset-bottom))] z-30 bg-surface">
           <div className="mx-auto flex max-w-xl flex-col gap-2.5 px-4 py-2.5">
-            <div className="flex gap-2" role="group" aria-label="Filtrer">
-              {filters.map(([key, label]) => (
+            <div
+              className="flex gap-2"
+              role="group"
+              aria-label={t("Filtrer", "Filter")}
+            >
+              {filters.map(([key, fr, en]) => (
                 <button
                   key={key}
                   type="button"
@@ -344,15 +382,19 @@ export function ChecklistView({ slug }: { slug: string }) {
                       : "border-contour"
                   }`}
                 >
-                  {label}
+                  {t(fr, en)}
                 </button>
               ))}
               <button
                 type="button"
                 aria-pressed={spoilerFree}
                 onClick={() => setSettings({ spoilerFree: !spoilerFree })}
-                aria-label="Masquer les spoilers"
-                title={spoilerFree ? "Spoilers masqués" : "Spoilers visibles"}
+                aria-label={t("Masquer les spoilers", "Hide spoilers")}
+                title={
+                  spoilerFree
+                    ? t("Spoilers masqués", "Spoilers hidden")
+                    : t("Spoilers visibles", "Spoilers shown")
+                }
                 className={`ml-auto flex size-11 shrink-0 items-center justify-center rounded-full border ${
                   spoilerFree
                     ? "border-lagon bg-lagon text-nuit"
@@ -389,15 +431,21 @@ export function ChecklistView({ slug }: { slug: string }) {
                 <circle cx="11" cy="11" r="7" />
                 <path d="M20 20l-4-4" />
               </svg>
-              <span className="sr-only">Chercher</span>
+              <span className="sr-only">{t("Chercher", "Search")}</span>
               <input
                 type="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder={
                   cat.id === "histoire"
-                    ? "Chercher un titre, un chapitre"
-                    : "Chercher un numéro, un lieu"
+                    ? t(
+                        "Chercher un titre, un chapitre",
+                        "Search a title, a chapter",
+                      )
+                    : t(
+                        "Chercher un numéro, un lieu",
+                        "Search a number, a place",
+                      )
                 }
                 className="min-w-0 flex-1 bg-transparent text-base text-sable placeholder:text-brume focus:outline-none"
               />

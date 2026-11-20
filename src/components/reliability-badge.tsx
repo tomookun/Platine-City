@@ -1,9 +1,8 @@
-import type { Reliability } from "@/data/types";
+"use client";
 
-const fmt = (iso: string) => {
-  const [y, m, d] = iso.split("-");
-  return `${d}/${m}/${y}`;
-};
+import type { Reliability } from "@/data/types";
+import { formatShortDate } from "@/i18n/locale";
+import { useI18n } from "@/i18n/locale-context";
 
 /**
  * `about` : « jeu » pour une info vérifiée dans GTA 6, « site » pour un
@@ -16,17 +15,21 @@ export function ReliabilityBadge({
   value: Reliability;
   about?: "jeu" | "site";
 }) {
+  const { t, locale } = useI18n();
   if (value.status === "verified") {
-    const label = about === "jeu" ? "Vérifié en jeu le" : "Mis à jour le";
+    const label =
+      about === "jeu"
+        ? t("Vérifié en jeu le", "Verified in game on")
+        : t("Mis à jour le", "Updated on");
     return (
       <span className="text-[13px] font-semibold text-lagon">
-        {label} {fmt(value.verifiedAt)}
+        {label} {formatShortDate(locale, value.verifiedAt)}
       </span>
     );
   }
   return (
     <span className="text-[13px] font-semibold text-soleil">
-      Rumeur, à confirmer
+      {t("Rumeur, à confirmer", "Rumor, to be confirmed")}
     </span>
   );
 }

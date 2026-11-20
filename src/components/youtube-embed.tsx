@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { formatTime, parseYouTube } from "@/lib/youtube";
+import { useI18n } from "@/i18n/locale-context";
 
 /**
  * Vidéo YouTube « légère » : seule la miniature est chargée ; le lecteur
@@ -17,11 +18,14 @@ export function YouTubeEmbed({
   credit: string;
   title: string;
 }) {
+  const { t } = useI18n();
   const ref = parseYouTube(link);
   const [playing, setPlaying] = useState(false);
   if (!ref) return null;
   const { id, start } = ref;
-  const at = start ? ` à ${formatTime(start)}` : "";
+  const at = start
+    ? t(` à ${formatTime(start)}`, ` at ${formatTime(start)}`)
+    : "";
 
   return (
     <figure className="flex flex-col gap-1.5">
@@ -29,7 +33,7 @@ export function YouTubeEmbed({
         {playing ? (
           <iframe
             src={`https://www.youtube-nocookie.com/embed/${id}?start=${start}&autoplay=1&rel=0&playsinline=1`}
-            title={`Vidéo : ${title}`}
+            title={t(`Vidéo : ${title}`, `Video: ${title}`)}
             allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
             allowFullScreen
             className="absolute inset-0 size-full"
@@ -38,7 +42,10 @@ export function YouTubeEmbed({
           <button
             type="button"
             onClick={() => setPlaying(true)}
-            aria-label={`Lire la vidéo de ${credit}${at}`}
+            aria-label={t(
+              `Lire la vidéo de ${credit}${at}`,
+              `Play the video by ${credit}${at}`,
+            )}
             className="group absolute inset-0 size-full"
           >
             {/* eslint-disable-next-line @next/next/no-img-element -- miniature externe, chargée à la demande */}
@@ -70,7 +77,8 @@ export function YouTubeEmbed({
       </div>
       <figcaption className="flex flex-wrap justify-between gap-x-3 text-[13px] text-brume">
         <span>
-          Vidéo : {credit}
+          {t("Vidéo : ", "Video: ")}
+          {credit}
           {at}
         </span>
         <a
@@ -79,7 +87,7 @@ export function YouTubeEmbed({
           rel="noopener noreferrer"
           className="text-lagon underline-offset-4 hover:underline"
         >
-          Voir sur YouTube
+          {t("Voir sur YouTube", "Watch on YouTube")}
         </a>
       </figcaption>
     </figure>

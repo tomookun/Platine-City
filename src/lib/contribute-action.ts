@@ -1,6 +1,7 @@
 "use server";
 
 import { game } from "@/data/game";
+import { tr, type Locale } from "@/i18n/locale";
 import {
   checkPhoto,
   validateContribution,
@@ -45,12 +46,17 @@ export async function submitContribution(
   _prev: ContributionState,
   form: FormData,
 ): Promise<ContributionState> {
-  const result = validateContribution(form, game);
+  const locale: Locale = form.get("locale") === "en" ? "en" : "fr";
+  const t = tr(locale);
+  const result = validateContribution(form, game, locale);
   // Un robot reçoit un faux succès et rien n'est enregistré.
   if (!result.ok && result.spam)
     return {
       status: "ok",
-      message: "Merci, ta contribution sera relue.",
+      message: t(
+        "Merci, ta contribution sera relue.",
+        "Thanks, your tip will be reviewed.",
+      ),
       errors: {},
       values: {},
     };
@@ -63,7 +69,7 @@ export async function submitContribution(
   } | null = null;
   if (file instanceof File && file.size > 0) {
     const bytes = new Uint8Array(await file.arrayBuffer());
-    const check = checkPhoto(bytes);
+    const check = checkPhoto(bytes, locale);
     if (!check.ok) {
       const errors = {
         ...(result.ok ? {} : result.errors),
@@ -71,7 +77,10 @@ export async function submitContribution(
       };
       return {
         status: "error",
-        message: "Corrige les champs indiqués.",
+        message: t(
+          "Corrige les champs indiqués.",
+          "Please fix the highlighted fields.",
+        ),
         errors,
         values: keep(form),
       };
@@ -82,7 +91,10 @@ export async function submitContribution(
   if (!result.ok) {
     return {
       status: "error",
-      message: "Corrige les champs indiqués.",
+      message: t(
+        "Corrige les champs indiqués.",
+        "Please fix the highlighted fields.",
+      ),
       errors: result.errors,
       values: keep(form),
     };
@@ -114,16 +126,20 @@ export async function submitContribution(
       );
       return {
         status: "ok",
-        message:
+        message: t(
           "Merci, ta contribution sera relue. (Mode dev : affichée dans la console.)",
+          "Thanks, your tip will be reviewed. (Dev mode: shown in the console.)",
+        ),
         errors: {},
         values: {},
       };
     }
     return {
       status: "error",
-      message:
+      message: t(
         "Les contributions ouvrent très bientôt. Réessaie dans quelques jours.",
+        "Contributions open very soon. Try again in a few days.",
+      ),
       errors: {},
       values: keep(form),
     };
@@ -183,7 +199,10 @@ export async function submitContribution(
     console.error("Échec d'enregistrement d'une contribution", e);
     return {
       status: "error",
-      message: "L’envoi a échoué. Vérifie ta connexion et réessaie.",
+      message: t(
+        "L’envoi a échoué. Vérifie ta connexion et réessaie.",
+        "Sending failed. Check your connection and try again.",
+      ),
       errors: {},
       values: keep(form),
     };
@@ -191,7 +210,10 @@ export async function submitContribution(
 
   return {
     status: "ok",
-    message: "Merci, ta contribution sera relue avant publication.",
+    message: t(
+      "Merci, ta contribution sera relue avant publication.",
+      "Thanks, your tip will be reviewed before it goes live.",
+    ),
     errors: {},
     values: {},
   };

@@ -1,5 +1,6 @@
-import { publishedGuides } from "@/content/guides";
-import { GAME_BASE, categoryPath, game } from "@/data/game";
+import { game } from "@/data/game";
+import { allPageKeys, pathFor } from "@/i18n/alternates";
+import { LOCALES, paths } from "@/i18n/locale";
 
 /**
  * Service worker généré pour rester synchronisé avec les données :
@@ -8,15 +9,12 @@ import { GAME_BASE, categoryPath, game } from "@/data/game";
  * - fichiers /_next/static : cache d'abord (noms versionnés).
  */
 export function GET() {
+  // Toutes les pages, en français et en anglais, plus la sauvegarde.
   const pages = [
-    "/",
-    GAME_BASE,
-    "/nouveautes",
-    "/guides",
-    "/contribuer",
-    "/sauvegarde",
-    ...game.categories.map((c) => categoryPath(c.slug)),
-    ...publishedGuides().map((g) => `/guides/${g.slug}`),
+    ...allPageKeys().flatMap((key) =>
+      LOCALES.map((l) => pathFor(key, l)).filter((x): x is string => !!x),
+    ),
+    ...LOCALES.map((l) => paths(l).backup),
   ];
   const cacheName = `platinecity-${game.version}`;
 

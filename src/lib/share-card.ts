@@ -1,6 +1,7 @@
 "use client";
 
 import { SITE_NAME } from "@/data/game";
+import { LEGAL_NOTICE, numberFormat, tr, type Locale } from "@/i18n/locale";
 
 /**
  * Carte de progression à partager (image 1080×1350), dessinée sur le
@@ -14,9 +15,9 @@ const C = {
   lagon: "#3de3d3",
 };
 
-const nf = new Intl.NumberFormat("fr-FR");
-
 export type ShareStats = { percent: number; done: number; total: number };
+
+type ShareOptions = ShareStats & { locale: Locale };
 
 function cssFont(variable: string, fallback: string) {
   const v = getComputedStyle(document.documentElement)
@@ -29,7 +30,10 @@ export async function drawShareCard({
   percent,
   done,
   total,
-}: ShareStats): Promise<Blob> {
+  locale,
+}: ShareOptions): Promise<Blob> {
+  const t = tr(locale);
+  const nf = numberFormat(locale);
   const W = 1080;
   const H = 1350;
   const canvas = document.createElement("canvas");
@@ -93,14 +97,17 @@ export async function drawShareCard({
   ctx.fillStyle = C.sable;
   ctx.textAlign = "center";
   ctx.font = `800 330px ${display}`;
-  ctx.fillText(`${percent} %`, W / 2, 1000);
+  ctx.fillText(t(`${percent} %`, `${percent}%`), W / 2, 1000);
 
   ctx.font = `600 52px ${body}`;
-  ctx.fillText("de mon 100 % sur GTA 6", W / 2, 1080);
+  ctx.fillText(t("de mon 100 % sur GTA 6", "of my GTA 6 100%"), W / 2, 1080);
   ctx.fillStyle = C.brume;
   ctx.font = `500 38px ${body}`;
   ctx.fillText(
-    `${nf.format(done)} objectifs sur ${nf.format(total)}`,
+    t(
+      `${nf.format(done)} objectifs sur ${nf.format(total)}`,
+      `${nf.format(done)} of ${nf.format(total)} goals`,
+    ),
     W / 2,
     1140,
   );
@@ -111,11 +118,7 @@ export async function drawShareCard({
   ctx.fillText(window.location.host, W / 2, 1240);
   ctx.fillStyle = C.brume;
   ctx.font = `400 26px ${body}`;
-  ctx.fillText(
-    "Site non officiel, non affilié à Rockstar Games ni à Take-Two Interactive.",
-    W / 2,
-    1295,
-  );
+  ctx.fillText(LEGAL_NOTICE[locale], W / 2, 1295);
 
   return new Promise((resolve, reject) =>
     canvas.toBlob(
@@ -131,9 +134,13 @@ export type ShareResult = "partage" | "telecharge" | "annule";
  * Partage la carte : image + lien via le menu de partage du téléphone,
  * sinon lien seul, sinon téléchargement de l'image (ordinateur).
  */
-export async function shareProgress(stats: ShareStats): Promise<ShareResult> {
+export async function shareProgress(stats: ShareOptions): Promise<ShareResult> {
+  const t = tr(stats.locale);
   const url = window.location.origin;
-  const text = `Je suis à ${stats.percent} % du 100 % de GTA 6. Tu en es où ? Suis ta progression sur ${SITE_NAME} :`;
+  const text = t(
+    `Je suis à ${stats.percent} % du 100 % de GTA 6. Tu en es où ? Suis ta progression sur ${SITE_NAME} :`,
+    `I'm at ${stats.percent}% of GTA 6 100% completion. How far are you? Track yours on ${SITE_NAME}:`,
+  );
   const blob = await drawShareCard(stats);
   const file = new File([blob], `platine-city-${stats.percent}.png`, {
     type: "image/png",

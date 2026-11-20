@@ -1,10 +1,11 @@
 import type { GameData } from "@/data/types";
+import { tr, type Locale } from "@/i18n/locale";
 
 /** Validation d'une contribution, sans dépendance au serveur (testable). */
 export const CONTRIBUTION_KINDS = {
-  emplacement: "Signaler un emplacement",
-  correction: "Corriger une info",
-  autre: "Autre",
+  emplacement: ["Signaler un emplacement", "Report a location"],
+  correction: ["Corriger une info", "Fix some info"],
+  autre: ["Autre", "Other"],
 } as const;
 
 export type ContributionKind = keyof typeof CONTRIBUTION_KINDS;
@@ -49,7 +50,9 @@ const text = (v: FormDataEntryValue | null) =>
 export function validateContribution(
   form: FormData,
   data: GameData,
+  locale: Locale = "fr",
 ): ValidationResult {
+  const t = tr(locale);
   // Champ piège invisible : un humain le laisse vide.
   if (text(form.get("website"))) return { ok: false, errors: {}, spam: true };
 
@@ -57,16 +60,25 @@ export function validateContribution(
 
   const kind = text(form.get("kind"));
   if (!(kind in CONTRIBUTION_KINDS))
-    errors.kind = "Choisis un type de contribution.";
+    errors.kind = t(
+      "Choisis un type de contribution.",
+      "Pick a contribution type.",
+    );
 
   const categoryId = text(form.get("categoryId")) || null;
   if (categoryId && !data.categories.some((c) => c.id === categoryId)) {
-    errors.categoryId = "Cette catégorie n'existe pas.";
+    errors.categoryId = t(
+      "Cette catégorie n'existe pas.",
+      "This category doesn't exist.",
+    );
   }
 
   const itemRef = text(form.get("itemRef")) || null;
   if (itemRef && itemRef.length > LIMITS.itemRef) {
-    errors.itemRef = `${LIMITS.itemRef} caractères maximum.`;
+    errors.itemRef = t(
+      `${LIMITS.itemRef} caractères maximum.`,
+      `${LIMITS.itemRef} characters max.`,
+    );
   }
 
   const message =
@@ -75,8 +87,12 @@ export function validateContribution(
       : "";
   const [min, max] = LIMITS.message;
   if (message.length < min)
-    errors.message = `Décris ta contribution en ${min} caractères minimum.`;
-  else if (message.length > max) errors.message = `${max} caractères maximum.`;
+    errors.message = t(
+      `Décris ta contribution en ${min} caractères minimum.`,
+      `Describe your tip in at least ${min} characters.`,
+    );
+  else if (message.length > max)
+    errors.message = t(`${max} caractères maximum.`, `${max} characters max.`);
 
   const sourceUrl = text(form.get("sourceUrl")) || null;
   if (sourceUrl) {
@@ -88,16 +104,24 @@ export function validateContribution(
       valid = false;
     }
     if (!valid)
-      errors.sourceUrl = "Colle un lien complet qui commence par https://.";
+      errors.sourceUrl = t(
+        "Colle un lien complet qui commence par https://.",
+        "Paste a full link starting with https://.",
+      );
   }
 
   const pseudo = text(form.get("pseudo")) || null;
   if (pseudo && pseudo.length > LIMITS.pseudo)
-    errors.pseudo = `${LIMITS.pseudo} caractères maximum.`;
+    errors.pseudo = t(
+      `${LIMITS.pseudo} caractères maximum.`,
+      `${LIMITS.pseudo} characters max.`,
+    );
 
   if (form.get("consent") !== "on") {
-    errors.consent =
-      "Coche la case pour accepter la relecture et la publication.";
+    errors.consent = t(
+      "Coche la case pour accepter la relecture et la publication.",
+      "Tick the box to accept review and publication.",
+    );
   }
 
   if (Object.keys(errors).length > 0) return { ok: false, errors };
@@ -145,11 +169,32 @@ export type PhotoCheck =
  * Vérifie une capture d'après son contenu réel (les premiers octets), pas
  * d'après son nom ou le type annoncé par le navigateur.
  */
-export function checkPhoto(bytes: Uint8Array): PhotoCheck {
-  if (bytes.length === 0) return { ok: false, error: "Le fichier est vide." };
+export function checkPhoto(
+  bytes: Uint8Array,
+  locale: Locale = "fr",
+): PhotoCheck {
+  const t = tr(locale);
+  if (bytes.length === 0)
+    return {
+      ok: false,
+      error: t("Le fichier est vide.", "The file is empty."),
+    };
   if (bytes.length > PHOTO_MAX_BYTES)
-    return { ok: false, error: "Image trop lourde (3,5 Mo maximum)." };
-  const t = PHOTO_TYPES.find((p) => bytes.length >= 12 && p.magic(bytes));
-  if (!t) return { ok: false, error: "Envoie une image JPG, PNG ou WebP." };
-  return { ok: true, ext: t.ext, type: t.type };
+    return {
+      ok: false,
+      error: t(
+        "Image trop lourde (3,5 Mo maximum).",
+        "Image too large (3.5 MB max).",
+      ),
+    };
+  const kind = PHOTO_TYPES.find((p) => bytes.length >= 12 && p.magic(bytes));
+  if (!kind)
+    return {
+      ok: false,
+      error: t(
+        "Envoie une image JPG, PNG ou WebP.",
+        "Send a JPG, PNG or WebP image.",
+      ),
+    };
+  return { ok: true, ext: kind.ext, type: kind.type };
 }

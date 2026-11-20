@@ -40,3 +40,10 @@ npm run build && npm start   # version de production (service worker actif)
 | `SUPABASE_URL` | URL du projet Supabase |
 | `SUPABASE_SERVICE_ROLE_KEY` | Clé serveur, **secrète**, jamais préfixée `NEXT_PUBLIC_` |
 | `NEXT_PUBLIC_SHOW_AD_SLOTS` | `1` pour afficher les emplacements pub (désactivés par défaut) |
+
+## Deux langues (français et anglais)
+
+- Le français est à la racine (`/gta-6`), l'anglais sous `/en` (`/en/gta-6`). La progression est la même dans les deux langues.
+- Un texte d'interface s'écrit avec ses deux versions côte à côte : `t("Bonjour", "Hello")` (`useI18n()` côté client, `tr(locale)` côté serveur).
+- Noms, slugs et descriptions anglais des catégories : `src/data/game-en.ts`. Pages : vues communes dans `src/views/pages.tsx`, routes dans `src/app/(fr)` et `src/app/en`.
+- Nouveautés : chaque entrée de `src/data/changelog.ts` a un champ `en`. Guides : une version par langue avec la même `key`.

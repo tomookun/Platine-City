@@ -4,9 +4,9 @@ import { useActionState } from "react";
 import {
   submitContribution,
   type ContributionState,
-} from "@/app/contribuer/actions";
-import { game } from "@/data/game";
+} from "@/lib/contribute-action";
 import { CONTRIBUTION_KINDS, LIMITS } from "@/lib/contribution";
+import { useI18n } from "@/i18n/locale-context";
 import { PhotoField } from "./photo-field";
 
 const initial: ContributionState = {
@@ -24,14 +24,18 @@ const err = "text-[13px] font-semibold text-soleil";
 
 export function ContributionForm() {
   const [state, action, pending] = useActionState(submitContribution, initial);
+  const { t, locale, game } = useI18n();
   const e = state.errors;
   const v = state.values;
 
   return (
     <form action={action} noValidate className="flex flex-col gap-5">
+      <input type="hidden" name="locale" value={locale} />
       <fieldset className="flex flex-col gap-2">
-        <legend className={`${label} mb-2`}>Tu veux…</legend>
-        {Object.entries(CONTRIBUTION_KINDS).map(([value, text], i) => (
+        <legend className={`${label} mb-2`}>
+          {t("Tu veux…", "You want to…")}
+        </legend>
+        {Object.entries(CONTRIBUTION_KINDS).map(([value, [fr, en]], i) => (
           <label
             key={value}
             className="flex min-h-12 items-center gap-3 rounded-[10px] border border-contour px-3.5 has-[:checked]:border-rose"
@@ -43,7 +47,7 @@ export function ContributionForm() {
               defaultChecked={v.kind ? v.kind === value : i === 0}
               className="size-5 accent-[#ff5c93]"
             />
-            <span className="text-[17px]">{text}</span>
+            <span className="text-[17px]">{t(fr, en)}</span>
           </label>
         ))}
         {e.kind && <p className={err}>{e.kind}</p>}
@@ -51,7 +55,7 @@ export function ContributionForm() {
 
       <div className="flex flex-col gap-1.5">
         <label htmlFor="categoryId" className={label}>
-          Catégorie
+          {t("Catégorie", "Category")}
         </label>
         <select
           id="categoryId"
@@ -59,7 +63,9 @@ export function ContributionForm() {
           defaultValue={v.categoryId ?? ""}
           className={`${field} h-12`}
         >
-          <option value="">Aucune ou je ne sais pas</option>
+          <option value="">
+            {t("Aucune ou je ne sais pas", "None or not sure")}
+          </option>
           {game.categories.map((c) => (
             <option key={c.id} value={c.id}>
               {c.name}
@@ -71,26 +77,26 @@ export function ContributionForm() {
 
       <div className="flex flex-col gap-1.5">
         <label htmlFor="itemRef" className={label}>
-          Élément concerné
+          {t("Élément concerné", "Item")}
         </label>
         <input
           id="itemRef"
           name="itemRef"
           defaultValue={v.itemRef}
           maxLength={LIMITS.itemRef}
-          placeholder="Ex. : Cascade 152"
+          placeholder={t("Ex. : Cascade 152", "E.g. Stunt 152")}
           className={`${field} h-12`}
           aria-describedby="itemRef-help"
         />
         <p id="itemRef-help" className={help}>
-          Facultatif.
+          {t("Facultatif.", "Optional.")}
         </p>
         {e.itemRef && <p className={err}>{e.itemRef}</p>}
       </div>
 
       <div className="flex flex-col gap-1.5">
         <label htmlFor="message" className={label}>
-          Ce que tu as vu en jeu
+          {t("Ce que tu as vu en jeu", "What you saw in game")}
         </label>
         <textarea
           id="message"
@@ -101,18 +107,24 @@ export function ContributionForm() {
           maxLength={LIMITS.message[1]}
           aria-invalid={!!e.message}
           aria-describedby="message-help"
-          placeholder="Où exactement, et comment y accéder. Décris avec tes mots, sans copier un autre site."
+          placeholder={t(
+            "Où exactement, et comment y accéder. Décris avec tes mots, sans copier un autre site.",
+            "Where exactly, and how to get there. Use your own words, don't copy another site.",
+          )}
           className={`${field} py-3`}
         />
         <p id="message-help" className={help}>
-          Entre {LIMITS.message[0]} et {LIMITS.message[1]} caractères.
+          {t(
+            `Entre ${LIMITS.message[0]} et ${LIMITS.message[1]} caractères.`,
+            `Between ${LIMITS.message[0]} and ${LIMITS.message[1]} characters.`,
+          )}
         </p>
         {e.message && <p className={err}>{e.message}</p>}
       </div>
 
       <div className="flex flex-col gap-1.5">
         <label htmlFor="sourceUrl" className={label}>
-          Lien vers une preuve
+          {t("Lien vers une preuve", "Link to proof")}
         </label>
         <input
           id="sourceUrl"
@@ -120,12 +132,18 @@ export function ContributionForm() {
           defaultValue={v.sourceUrl}
           type="url"
           inputMode="url"
-          placeholder="https://… (vidéo YouTube avec le moment exact)"
+          placeholder={t(
+            "https://… (vidéo YouTube avec le moment exact)",
+            "https://… (YouTube video at the exact moment)",
+          )}
           className={`${field} h-12`}
           aria-describedby="sourceUrl-help"
         />
         <p id="sourceUrl-help" className={help}>
-          Facultatif, mais ça accélère la vérification.
+          {t(
+            "Facultatif, mais ça accélère la vérification.",
+            "Optional, but it speeds up the check.",
+          )}
         </p>
         {e.sourceUrl && <p className={err}>{e.sourceUrl}</p>}
       </div>
@@ -134,7 +152,7 @@ export function ContributionForm() {
 
       <div className="flex flex-col gap-1.5">
         <label htmlFor="pseudo" className={label}>
-          Pseudo pour te remercier
+          {t("Pseudo pour te remercier", "Nickname to credit you")}
         </label>
         <input
           id="pseudo"
@@ -146,7 +164,7 @@ export function ContributionForm() {
           aria-describedby="pseudo-help"
         />
         <p id="pseudo-help" className={help}>
-          Facultatif. Pas d&apos;e-mail demandé.
+          {t("Facultatif. Pas d'e-mail demandé.", "Optional. No email needed.")}
         </p>
         {e.pseudo && <p className={err}>{e.pseudo}</p>}
       </div>
@@ -156,7 +174,7 @@ export function ContributionForm() {
         aria-hidden="true"
         className="absolute -left-[9999px] h-px w-px overflow-hidden"
       >
-        <label htmlFor="website">Ne pas remplir</label>
+        <label htmlFor="website">{t("Ne pas remplir", "Leave empty")}</label>
         <input id="website" name="website" tabIndex={-1} autoComplete="off" />
       </div>
 
@@ -170,9 +188,10 @@ export function ContributionForm() {
             className="mt-0.5 size-5 shrink-0 accent-[#ff5c93]"
           />
           <span className="text-[15px]">
-            J&apos;accepte que ma contribution et ma capture soient relues puis
-            publiées sur Platine City, reformulées ou recadrées si besoin, avec
-            mon pseudo en crédit.
+            {t(
+              "J'accepte que ma contribution et ma capture soient relues puis publiées sur Platine City, reformulées ou recadrées si besoin, avec mon pseudo en crédit.",
+              "I agree that my tip and screenshot may be reviewed, then published on Platine City, reworded or cropped if needed, credited with my nickname.",
+            )}
           </span>
         </label>
         {e.consent && <p className={err}>{e.consent}</p>}
@@ -183,7 +202,9 @@ export function ContributionForm() {
         disabled={pending}
         className="h-12 rounded-[10px] bg-rose text-[17px] font-bold text-nuit active:scale-[0.97] disabled:opacity-50"
       >
-        {pending ? "Envoi…" : "Envoyer ma contribution"}
+        {pending
+          ? t("Envoi…", "Sending…")
+          : t("Envoyer ma contribution", "Send my tip")}
       </button>
 
       <p

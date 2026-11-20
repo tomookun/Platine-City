@@ -21,11 +21,13 @@
  */
 export type Media =
   | { youtube: string; credit: string }
-  | { image: string; alt: string; credit: string };
+  | { image: string; alt: string; altEn?: string; credit: string };
 
 export type ItemDetails = {
   /** Comment y accéder, en 1 ou 2 phrases, avec nos mots. */
   how?: string;
+  /** La même chose en anglais (sinon le texte français est affiché). */
+  howEn?: string;
   media?: Media[];
 };
 

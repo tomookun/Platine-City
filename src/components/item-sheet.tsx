@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { getDetails } from "@/data/details";
+import { useI18n } from "@/i18n/locale-context";
 import type { Category, ChecklistItem } from "@/data/types";
 import { CategoryIcon } from "./category-icon";
 import { ReliabilityBadge } from "./reliability-badge";
@@ -37,11 +38,13 @@ export function ItemSheet({
     if (!item && d.open) d.close();
   }, [item]);
 
+  const { t, p, locale } = useI18n();
   const details = item ? getDetails(item.id) : undefined;
+  const how = locale === "en" ? (details?.howEn ?? details?.how) : details?.how;
   const media = hidden ? [] : (details?.media ?? []);
   const title = item
     ? hidden
-      ? `${cat.unit[0].toUpperCase()}${cat.unit.slice(1)} ${item.n} (titre masqué)`
+      ? `${cat.unit[0].toUpperCase()}${cat.unit.slice(1)} ${item.n} ${t("(titre masqué)", "(title hidden)")}`
       : item.title
     : "";
 
@@ -81,7 +84,7 @@ export function ItemSheet({
             <button
               type="button"
               onClick={() => ref.current?.close()}
-              aria-label="Fermer la fiche"
+              aria-label={t("Fermer la fiche", "Close details")}
               className="-mr-2 -mt-1 flex size-11 shrink-0 items-center justify-center rounded-full text-brume"
             >
               <svg
@@ -100,20 +103,22 @@ export function ItemSheet({
 
           {hidden ? (
             <p className="rounded-feuille border border-ligne p-4 text-brume">
-              Détails masqués par l&apos;anti-spoiler. Désactive-le (œil en bas
-              de la liste) pour les voir.
+              {t(
+                "Détails masqués par l'anti-spoiler. Désactive-le (œil en bas de la liste) pour les voir.",
+                "Details hidden by spoiler-free mode. Turn it off (eye at the bottom of the list) to see them.",
+              )}
             </p>
           ) : (
             <>
-              {details?.how && (
+              {how && (
                 <section
-                  aria-label="Comment y aller"
+                  aria-label={t("Comment y aller", "How to get there")}
                   className="flex flex-col gap-1"
                 >
                   <h3 className="text-[13px] font-semibold uppercase tracking-wide text-lagon">
-                    Comment y aller
+                    {t("Comment y aller", "How to get there")}
                   </h3>
-                  <p className="text-[17px] leading-relaxed">{details.how}</p>
+                  <p className="text-[17px] leading-relaxed">{how}</p>
                 </section>
               )}
               {media.map((m, i) =>
@@ -128,37 +133,43 @@ export function ItemSheet({
                   <figure key={i} className="flex flex-col gap-1.5">
                     <Image
                       src={m.image}
-                      alt={m.alt}
+                      alt={locale === "en" ? (m.altEn ?? m.alt) : m.alt}
                       width={1280}
                       height={720}
                       sizes="(max-width: 640px) 100vw, 576px"
                       className="aspect-video w-full rounded-case object-cover"
                     />
                     <figcaption className="text-[13px] text-brume">
-                      Photo : {m.credit}
+                      {t("Photo : ", "Photo: ")}
+                      {m.credit}
                     </figcaption>
                   </figure>
                 ),
               )}
-              {media.length === 0 && !details?.how && (
+              {media.length === 0 && !how && (
                 <p className="rounded-feuille border border-ligne p-4 text-brume">
-                  Pas encore de vidéo ni de photo pour cet objet. Tu sais où il
-                  est ?{" "}
+                  {t(
+                    "Pas encore de vidéo ni de photo pour cet objet. Tu sais où il est ? ",
+                    "No video or photo for this one yet. Know where it is? ",
+                  )}
                   <Link
-                    href="/contribuer"
+                    href={p.contribute}
                     className="text-rose underline underline-offset-4"
                   >
-                    Envoie l&apos;emplacement
+                    {t("Envoie l'emplacement", "Send the location")}
                   </Link>
-                  , tu seras crédité.
+                  {t(", tu seras crédité.", " and get credited.")}
                 </p>
               )}
               {media.length > 0 && (
                 <Link
-                  href="/contribuer"
+                  href={p.contribute}
                   className="text-[15px] text-rose underline underline-offset-4"
                 >
-                  Une erreur, une meilleure photo ? Propose-la
+                  {t(
+                    "Une erreur, une meilleure photo ? Propose-la",
+                    "Spotted a mistake or have a better photo? Share it",
+                  )}
                 </Link>
               )}
             </>
@@ -172,7 +183,9 @@ export function ItemSheet({
               done ? "border border-contour text-sable" : "bg-rose text-nuit"
             }`}
           >
-            {done ? "Décocher" : "Cocher comme fait"}
+            {done
+              ? t("Décocher", "Untick")
+              : t("Cocher comme fait", "Mark as done")}
           </button>
         </div>
       )}

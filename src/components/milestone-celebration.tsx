@@ -13,6 +13,7 @@ import {
 import { globalProgress } from "@/lib/progress";
 import { useProgress } from "@/lib/progress-store";
 import { ShareButton } from "./share-button";
+import { useI18n } from "@/i18n/locale-context";
 import { Sun } from "./sun";
 
 /* Paliers déjà fêtés, dans localStorage. null = jamais initialisé. */
@@ -55,6 +56,7 @@ function useCelebrated() {
  */
 export function MilestoneCelebration() {
   const progress = useProgress();
+  const { t, locale } = useI18n();
   const done = useCelebrated();
   const ref = useRef<HTMLDialogElement>(null);
   const global = progress ? globalProgress(game, progress) : null;
@@ -77,7 +79,7 @@ export function MilestoneCelebration() {
     if (pending && done) setCelebrated(celebrate(done, pending));
   };
 
-  const text = pending ? MILESTONE_TEXT[pending] : null;
+  const text = pending ? MILESTONE_TEXT[locale][pending] : null;
 
   return (
     <dialog
@@ -90,7 +92,7 @@ export function MilestoneCelebration() {
         <div className="flex flex-col items-center gap-3 px-5 pb-5 pt-6 text-center">
           <Sun percent={global.percent} />
           <p className="font-display tabular text-[88px] font-extrabold leading-[0.85]">
-            {pending} %
+            {t(`${pending} %`, `${pending}%`)}
           </p>
           <h2
             id="palier-titre"
@@ -100,13 +102,17 @@ export function MilestoneCelebration() {
           </h2>
           <p className="text-brume">{text.body}</p>
           <div className="mt-2 flex w-full flex-col gap-2">
-            <ShareButton stats={global} label="Partager ce palier" primary />
+            <ShareButton
+              stats={global}
+              label={t("Partager ce palier", "Share this milestone")}
+              primary
+            />
             <button
               type="button"
               onClick={() => ref.current?.close()}
               className="h-12 rounded-[10px] border border-contour text-[17px] font-semibold"
             >
-              Continuer
+              {t("Continuer", "Keep going")}
             </button>
           </div>
         </div>

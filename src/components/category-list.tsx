@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { changelog } from "@/data/changelog";
-import { categoryPath, game } from "@/data/game";
+import { useI18n } from "@/i18n/locale-context";
 import { categoryProgress } from "@/lib/progress";
 import { useProgress } from "@/lib/progress-store";
 import { isCategoryNew } from "@/lib/seen";
@@ -13,6 +13,7 @@ import { SectionTitle } from "./section-title";
 export function CategoryList() {
   const progress = useProgress();
   const seen = useSeen();
+  const { t, p, game } = useI18n();
   return (
     <div className="flex flex-col gap-7">
       {game.sections.map((section) => {
@@ -37,7 +38,7 @@ export function CategoryList() {
                 return (
                   <li key={cat.id}>
                     <Link
-                      href={categoryPath(cat.slug)}
+                      href={p.category(cat.slug)}
                       className={`group relative flex h-full min-h-[136px] flex-col justify-between gap-3 overflow-hidden rounded-feuille border bg-surface p-3 transition-colors active:scale-[0.98] ${
                         complete
                           ? "border-lagon/70"
@@ -56,7 +57,7 @@ export function CategoryList() {
                         </span>
                         {fresh && (
                           <span className="rounded-full bg-rose px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide text-nuit">
-                            Nouveau
+                            {t("Nouveau", "New")}
                           </span>
                         )}
                       </span>
@@ -92,7 +93,9 @@ export function CategoryList() {
                           />
                         </span>
                       </span>
-                      {complete && <span className="sr-only">Terminé</span>}
+                      {complete && (
+                        <span className="sr-only">{t("Terminé", "Done")}</span>
+                      )}
                     </Link>
                   </li>
                 );

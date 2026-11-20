@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useI18n } from "@/i18n/locale-context";
 
 const MAX_SIDE = 1920;
 
@@ -25,9 +26,11 @@ async function compress(file: File): Promise<File> {
   return new File([blob], "capture.jpg", { type: "image/jpeg" });
 }
 
-const kb = (n: number) => `${Math.max(1, Math.round(n / 1024))} Ko`;
+const kb = (n: number, en: boolean) =>
+  `${Math.max(1, Math.round(n / 1024))} ${en ? "KB" : "Ko"}`;
 
 export function PhotoField({ error }: { error?: string }) {
+  const { t, locale } = useI18n();
   const input = useRef<HTMLInputElement>(null);
   const [preview, setPreview] = useState<{ url: string; size: number } | null>(
     null,
@@ -73,7 +76,7 @@ export function PhotoField({ error }: { error?: string }) {
   return (
     <div className="flex flex-col gap-1.5">
       <label htmlFor="photo" className="text-[15px] font-semibold">
-        Capture d&apos;écran
+        {t("Capture d'écran", "Screenshot")}
       </label>
       <input
         ref={input}
@@ -87,31 +90,37 @@ export function PhotoField({ error }: { error?: string }) {
         className="text-[15px] text-brume file:mr-3 file:h-12 file:rounded-[10px] file:border file:border-contour file:bg-surface file:px-4 file:font-semibold file:text-sable"
       />
       <p id="photo-help" className="text-[13px] text-brume">
-        Facultatif. Une capture faite{" "}
-        <strong className="text-sable">dans ton jeu</strong> (jamais celle
-        d&apos;un autre site). Elle est allégée sur ton téléphone avant
-        l&apos;envoi, puis relue avant publication.
+        {t("Facultatif. Une capture faite ", "Optional. A screenshot taken ")}
+        <strong className="text-sable">
+          {t("dans ton jeu", "in your own game")}
+        </strong>
+        {t(
+          " (jamais celle d'un autre site). Elle est allégée sur ton téléphone avant l'envoi, puis relue avant publication.",
+          " (never one from another site). It's shrunk on your phone before sending, then reviewed before publication.",
+        )}
       </p>
       {busy && (
-        <p className="text-[13px] text-brume">Préparation de l&apos;image…</p>
+        <p className="text-[13px] text-brume">
+          {t("Préparation de l'image…", "Preparing the image…")}
+        </p>
       )}
       {preview && !busy && (
         <div className="flex items-center gap-3">
           {/* eslint-disable-next-line @next/next/no-img-element -- aperçu local (blob:) */}
           <img
             src={preview.url}
-            alt="Aperçu de ta capture"
+            alt={t("Aperçu de ta capture", "Preview of your screenshot")}
             className="h-20 w-auto rounded-case object-cover"
           />
           <span className="flex-1 text-[13px] text-brume">
-            {kb(preview.size)}
+            {kb(preview.size, locale === "en")}
           </span>
           <button
             type="button"
             onClick={remove}
             className="min-h-11 px-2 text-[15px] font-semibold text-rose"
           >
-            Retirer
+            {t("Retirer", "Remove")}
           </button>
         </div>
       )}

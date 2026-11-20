@@ -41,25 +41,45 @@ export function parseCelebrated(
   }
 }
 
-/** Message affiché pour chaque palier. */
+/** Message affiché pour chaque palier, par langue. */
 export const MILESTONE_TEXT: Record<
-  Milestone,
-  { title: string; body: string }
+  "fr" | "en",
+  Record<Milestone, { title: string; body: string }>
 > = {
-  25: {
-    title: "Un quart du chemin",
-    body: "Le soleil pointe à l'horizon. Les gros morceaux t'attendent encore.",
+  fr: {
+    25: {
+      title: "Un quart du chemin",
+      body: "Le soleil pointe à l'horizon. Les gros morceaux t'attendent encore.",
+    },
+    50: {
+      title: "La moitié de Leonida",
+      body: "Tu as fait plus de la moitié des objectifs du 100 %.",
+    },
+    75: {
+      title: "Plus que la dernière ligne droite",
+      body: "Trois quarts bouclés. C'est le moment de traquer les derniers objets.",
+    },
+    100: {
+      title: "100 %. Respect.",
+      body: "Tous les objectifs requis sont faits. Le soleil est levé.",
+    },
   },
-  50: {
-    title: "La moitié de Leonida",
-    body: "Tu as fait plus de la moitié des objectifs du 100 %.",
-  },
-  75: {
-    title: "Plus que la dernière ligne droite",
-    body: "Trois quarts bouclés. C'est le moment de traquer les derniers objets.",
-  },
-  100: {
-    title: "100 %. Respect.",
-    body: "Tous les objectifs requis sont faits. Le soleil est levé.",
+  en: {
+    25: {
+      title: "A quarter of the way",
+      body: "The sun is peeking over the horizon. The big stuff is still ahead.",
+    },
+    50: {
+      title: "Halfway across Leonida",
+      body: "You've done more than half of the 100% requirements.",
+    },
+    75: {
+      title: "Final stretch",
+      body: "Three quarters done. Time to hunt down the last few.",
+    },
+    100: {
+      title: "100%. Respect.",
+      body: "Every required goal is done. The sun is fully up.",
+    },
   },
 };

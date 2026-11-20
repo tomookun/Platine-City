@@ -16,6 +16,7 @@ const log: Change[] = [
     at: "2026-11-21T10:00:00Z",
     kind: "verification",
     title: "B",
+    en: { title: "B" },
     categories: ["flamants"],
   },
   {
@@ -23,6 +24,7 @@ const log: Change[] = [
     at: "2026-11-20T10:00:00Z",
     kind: "ajout",
     title: "A",
+    en: { title: "A" },
     categories: ["histoire", "flamants"],
   },
 ];

@@ -3,22 +3,17 @@
 import Link from "next/link";
 import { useEffect } from "react";
 import { KIND_LABEL, changelog, type Change } from "@/data/changelog";
-import { categoryPath, game } from "@/data/game";
+import { formatDay, type Paths } from "@/i18n/locale";
+import { useI18n } from "@/i18n/locale-context";
+import type { GameData } from "@/data/types";
 import { isChangeNew, markFeedSeen } from "@/lib/seen";
 import { updateSeen, useSeen } from "@/lib/seen-store";
 
-const fmt = (iso: string) =>
-  new Date(iso).toLocaleDateString("fr-FR", {
-    day: "numeric",
-    month: "long",
-    timeZone: "Europe/Paris",
-  });
-
-function target(c: Change): string | undefined {
-  if (c.href) return c.href;
+function target(c: Change, p: Paths, game: GameData): string | undefined {
+  if (c.link) return p[c.link];
   const first = c.categories?.[0];
   const cat = first ? game.categories.find((x) => x.id === first) : undefined;
-  return cat ? categoryPath(cat.slug) : undefined;
+  return cat ? p.category(cat.slug) : undefined;
 }
 
 /**
@@ -27,6 +22,7 @@ function target(c: Change): string | undefined {
  */
 export function NewsFeed({ limit }: { limit?: number }) {
   const seen = useSeen();
+  const { t, p, game, locale } = useI18n();
   const entries = changelog.slice(0, limit);
 
   useEffect(() => {
@@ -37,13 +33,14 @@ export function NewsFeed({ limit }: { limit?: number }) {
     <ol className="flex flex-col">
       {entries.map((c) => {
         const isNew = seen !== null && isChangeNew(seen, c);
-        const href = target(c);
+        const href = target(c, p, game);
+        const text = locale === "en" ? c.en : c;
         const content = (
           <>
             <span className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px]">
               {isNew && (
                 <span className="rounded-full bg-rose px-2 py-0.5 font-bold text-nuit">
-                  Nouveau
+                  {t("Nouveau", "New")}
                 </span>
               )}
               <span
@@ -53,14 +50,16 @@ export function NewsFeed({ limit }: { limit?: number }) {
                     : "font-semibold text-soleil"
                 }
               >
-                {KIND_LABEL[c.kind]}
+                {t(...KIND_LABEL[c.kind])}
               </span>
               <time dateTime={c.at} className="text-brume">
-                {fmt(c.at)}
+                {formatDay(locale, c.at)}
               </time>
             </span>
-            <span className="text-[17px] font-semibold">{c.title}</span>
-            {c.body && <span className="text-[15px] text-brume">{c.body}</span>}
+            <span className="text-[17px] font-semibold">{text.title}</span>
+            {text.body && (
+              <span className="text-[15px] text-brume">{text.body}</span>
+            )}
           </>
         );
         return (

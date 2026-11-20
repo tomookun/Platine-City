@@ -25,6 +25,7 @@ npm run build && npm start   # version de production (service worker actif)
 | Logique de progression / sauvegarde | `src/lib/progress.ts`, `src/lib/storage.ts` |
 | Guides (ajouter une entrée, copier `_modele`) | `src/content/guides.ts` |
 | Journal « Quoi de neuf » (ajouter une entrée en haut à chaque mise à jour) | `src/data/changelog.ts` |
+| Vidéos YouTube, photos et « comment y aller » par objet | `src/data/details.ts` (photos dans `public/photos/`) |
 | Sources des données de jeu | `docs/sources-donnees.md` |
 | Table des contributions | `supabase/migrations/0001_contributions.sql` |
 | Design system | `docs/DESIGN.md` |

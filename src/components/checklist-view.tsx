@@ -20,6 +20,9 @@ import { game } from "@/data/game";
 import { changelog } from "@/data/changelog";
 import { latestChangeFor, markCategorySeen } from "@/lib/seen";
 import { updateSeen } from "@/lib/seen-store";
+import { getDetails } from "@/data/details";
+import { CategoryIcon } from "./category-icon";
+import { ItemSheet } from "./item-sheet";
 import { ReliabilityBadge } from "./reliability-badge";
 
 type Filter = "todo" | "done" | "all";
@@ -47,6 +50,7 @@ export function ChecklistView({ slug }: { slug: string }) {
   } | null>(null);
   // Garde visibles les éléments cochés pendant la session, pour pouvoir se corriger.
   const [touched, setTouched] = useState<Set<string>>(() => new Set());
+  const [openId, setOpenId] = useState<string | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useEffect(() => () => clearTimeout(timer.current), []);
@@ -65,6 +69,19 @@ export function ChecklistView({ slug }: { slug: string }) {
     clearTimeout(timer.current);
     timer.current = setTimeout(() => setToast(null), 5000);
   }
+
+  function toggle(id: string, label: string, done: boolean) {
+    if (!progress) return;
+    setTouched((t) => new Set(t).add(id));
+    commit(
+      (p) => toggleItem(game, p, id),
+      `${label} ${done ? "décoché" : "coché"}`,
+    );
+  }
+
+  const openItem = cat.items.find((it) => it.id === openId) ?? null;
+  const openHidden = !!openItem?.spoiler && spoilerFree;
+  const openDone = !!(openItem && progress?.checked[openItem.id]);
 
   const q = normalize(query.trim());
   const items = cat.items.filter((it) => {
@@ -85,12 +102,17 @@ export function ChecklistView({ slug }: { slug: string }) {
       className={`flex flex-col gap-4 ${cat.items.length > 0 ? "pb-40" : ""}`}
     >
       <header className="flex flex-col gap-2.5">
-        <Link
-          href="/gta-6"
-          className="-my-2 inline-flex min-h-11 items-center self-start text-[15px] text-brume"
-        >
-          Ton 100 %
-        </Link>
+        <div className="-my-2 flex items-center justify-between">
+          <Link
+            href="/gta-6"
+            className="inline-flex min-h-11 items-center text-[15px] text-brume"
+          >
+            Ton 100 %
+          </Link>
+          <span className="flex size-11 items-center justify-center rounded-feuille bg-surface text-rose">
+            <CategoryIcon id={cat.id} size={26} />
+          </span>
+        </div>
         <div className="flex items-end justify-between gap-3">
           <h1
             className={`font-display font-extrabold leading-[0.9] ${cat.name.length > 16 ? "text-[39px]" : "text-[49px]"}`}
@@ -204,40 +226,50 @@ export function ChecklistView({ slug }: { slug: string }) {
             const done = !!progress?.checked[it.id];
             const hidden = it.spoiler && spoilerFree;
             return (
-              <li key={it.id} className="border-t border-ligne">
+              <li
+                key={it.id}
+                className="flex items-stretch border-t border-ligne"
+              >
+                <button
+                  type="button"
+                  onClick={() => setOpenId(it.id)}
+                  aria-haspopup="dialog"
+                  aria-label={`Voir la fiche : ${hidden ? `${cat.unit} ${it.n}` : it.title}`}
+                  className="flex min-h-16 flex-1 flex-col justify-center gap-1 py-2.5 pr-2 text-left"
+                >
+                  <span
+                    className={`text-[17px] font-semibold ${done ? "text-brume line-through decoration-1" : ""}`}
+                  >
+                    {hidden
+                      ? `${cat.unit[0].toUpperCase()}${cat.unit.slice(1)} ${it.n} (titre masqué)`
+                      : it.title}
+                  </span>
+                  <span className="flex flex-wrap items-center gap-x-2 text-[13px] text-brume">
+                    {it.where && <span>{it.where}</span>}
+                    {!hidden && getDetails(it.id)?.media?.length ? (
+                      <span className="font-semibold text-lagon">
+                        ▶ Vidéo / photo
+                      </span>
+                    ) : null}
+                  </span>
+                  {it.reliability.status !== cat.reliability.status && (
+                    <ReliabilityBadge value={it.reliability} />
+                  )}
+                </button>
                 <button
                   type="button"
                   role="checkbox"
                   aria-checked={done}
+                  aria-label={hidden ? `${cat.unit} ${it.n}` : it.title}
                   disabled={!progress}
-                  onClick={() => {
-                    if (!progress) return;
-                    setTouched((s) => new Set(s).add(it.id));
-                    commit(
-                      (p) => toggleItem(game, p, it.id),
-                      `${hidden ? `N° ${it.n}` : it.title} ${done ? "décoché" : "coché"}`,
-                    );
-                  }}
-                  className="flex min-h-16 w-full items-center gap-3 py-2.5 text-left"
+                  onClick={() =>
+                    toggle(it.id, hidden ? `N° ${it.n}` : it.title, done)
+                  }
+                  className="flex w-14 shrink-0 items-center justify-end"
                 >
-                  <span className="flex flex-1 flex-col gap-1">
-                    <span
-                      className={`text-[17px] font-semibold ${done ? "text-brume line-through decoration-1" : ""}`}
-                    >
-                      {hidden
-                        ? `${cat.unit[0].toUpperCase()}${cat.unit.slice(1)} ${it.n} (titre masqué)`
-                        : it.title}
-                    </span>
-                    {it.where && (
-                      <span className="text-[13px] text-brume">{it.where}</span>
-                    )}
-                    {it.reliability.status !== cat.reliability.status && (
-                      <ReliabilityBadge value={it.reliability} />
-                    )}
-                  </span>
                   <span
                     aria-hidden="true"
-                    className={`flex size-8 shrink-0 items-center justify-center rounded-case border-2 ${
+                    className={`flex size-8 items-center justify-center rounded-case border-2 ${
                       done ? "border-lagon bg-lagon" : "border-contour"
                     }`}
                   >
@@ -260,6 +292,22 @@ export function ChecklistView({ slug }: { slug: string }) {
           })}
         </ul>
       )}
+
+      <ItemSheet
+        cat={cat}
+        item={openItem}
+        done={openDone}
+        hidden={openHidden}
+        onToggle={() =>
+          openItem &&
+          toggle(
+            openItem.id,
+            openHidden ? `N° ${openItem.n}` : openItem.title,
+            openDone,
+          )
+        }
+        onClose={() => setOpenId(null)}
+      />
 
       {toast && (
         <div

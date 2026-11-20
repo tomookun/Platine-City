@@ -4,6 +4,7 @@ import Link from "next/link";
 import { changelog } from "@/data/changelog";
 import { categoryPath, game } from "@/data/game";
 import { categoryProgress } from "@/lib/progress";
+import { CategoryIcon } from "./category-icon";
 import { useProgress } from "@/lib/progress-store";
 import { isCategoryNew } from "@/lib/seen";
 import { useSeen } from "@/lib/seen-store";
@@ -37,7 +38,11 @@ export function CategoryList() {
                       href={categoryPath(cat.slug)}
                       className="grid min-h-[64px] grid-cols-[1fr_auto] items-center gap-x-3 gap-y-1.5 py-3"
                     >
-                      <span className="flex items-center gap-2 text-[17px] font-semibold">
+                      <span className="flex items-center gap-2.5 text-[17px] font-semibold">
+                        <CategoryIcon
+                          id={cat.id}
+                          className={complete ? "text-lagon" : "text-rose"}
+                        />
                         {cat.name}
                         {fresh && (
                           <span className="rounded-full bg-rose px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide text-nuit">

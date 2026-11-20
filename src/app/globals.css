@@ -28,7 +28,14 @@ html {
 }
 
 body {
-  background: var(--color-nuit);
+  background:
+    radial-gradient(
+      120% 60% at 50% -10%,
+      rgba(194, 24, 91, 0.18),
+      transparent 60%
+    ),
+    var(--color-nuit);
+  background-attachment: fixed;
   color: var(--color-sable);
   font-family: var(--font-sans);
   font-size: 1rem;

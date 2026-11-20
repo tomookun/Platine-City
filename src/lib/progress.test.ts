@@ -18,16 +18,31 @@ const data: GameData = {
   sections: [{ id: "activites", name: "Activités" }],
   categories: [
     {
-      id: "cascades", slug: "cascades", name: "Cascades", unit: "cascade",
-      section: "activites", required: 8, total: 10, description: "", reliability: v,
+      id: "cascades",
+      slug: "cascades",
+      name: "Cascades",
+      unit: "cascade",
+      section: "activites",
+      required: 8,
+      total: 10,
+      description: "",
+      reliability: v,
       items: [
         { id: "c1", n: 1, title: "C1", reliability: v },
         { id: "c2", n: 2, title: "C2", reliability: v },
       ],
     },
     {
-      id: "banques", slug: "banques", name: "Banques", unit: "banque",
-      section: "activites", required: 5, total: 5, description: "", reliability: v, items: [],
+      id: "banques",
+      slug: "banques",
+      name: "Banques",
+      unit: "banque",
+      section: "activites",
+      required: 5,
+      total: 5,
+      description: "",
+      reliability: v,
+      items: [],
     },
   ],
 };
@@ -87,7 +102,13 @@ describe("setCount / increment", () => {
 describe("pourcentages", () => {
   it("calcule une catégorie (arrondi à l'inférieur)", () => {
     const p = setCount(cascades, emptyProgress(t0), 3, t0);
-    expect(categoryProgress(p, cascades)).toEqual({ done: 3, total: 8, percent: 37, all: 3, max: 10 });
+    expect(categoryProgress(p, cascades)).toEqual({
+      done: 3,
+      total: 8,
+      percent: 37,
+      all: 3,
+      max: 10,
+    });
     const q = setCount(banques, emptyProgress(t0), 4.6, t0);
     expect(categoryProgress(q, banques).percent).toBe(100);
   });
@@ -96,18 +117,30 @@ describe("pourcentages", () => {
     const p = setCount(cascades, emptyProgress(t0), 7, t0);
     expect(categoryProgress(p, cascades).percent).toBe(87);
     const big = { ...cascades, required: 1000, total: 1000 };
-    expect(categoryProgress(setCount(big, emptyProgress(t0), 999, t0), big).percent).toBe(99);
+    expect(
+      categoryProgress(setCount(big, emptyProgress(t0), 999, t0), big).percent,
+    ).toBe(99);
   });
 
   it("atteint 100 % au requis et compte le bonus jusqu'au total du jeu", () => {
     const p = setCount(cascades, emptyProgress(t0), 10, t0);
-    expect(categoryProgress(p, cascades)).toEqual({ done: 8, total: 8, percent: 100, all: 10, max: 10 });
+    expect(categoryProgress(p, cascades)).toEqual({
+      done: 8,
+      total: 8,
+      percent: 100,
+      all: 10,
+      max: 10,
+    });
   });
 
   it("calcule le global sur les objectifs requis, sans compter le bonus", () => {
     let p = setCount(cascades, emptyProgress(t0), 10, t0);
     p = setCount(banques, p, 2, t0);
-    expect(globalProgress(data, p)).toEqual({ done: 10, total: 13, percent: 76 });
+    expect(globalProgress(data, p)).toEqual({
+      done: 10,
+      total: 13,
+      percent: 76,
+    });
   });
 
   it("vaut 0 % sans progression", () => {

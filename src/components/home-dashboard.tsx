@@ -5,7 +5,7 @@ import { SITE_NAME, categoryPath, game } from "@/data/game";
 import { categoryProgress, globalProgress, increment } from "@/lib/progress";
 import { isSaved, updateProgress, useProgress } from "@/lib/progress-store";
 import { ShareButton } from "./share-button";
-import { Sun } from "./sun";
+import { ViceSky } from "./vice-sky";
 
 const nf = new Intl.NumberFormat("fr-FR");
 
@@ -26,62 +26,74 @@ export function HomeDashboard() {
 
   return (
     <div className="flex flex-col gap-6">
-      <header className="flex items-center justify-between">
-        <span className="font-display text-[26px] font-extrabold tracking-[0.5px] text-rose">
-          {SITE_NAME}
-        </span>
-        <Link
-          href="/sauvegarde"
-          className={`flex min-h-11 items-center text-[13px] underline-offset-4 hover:underline ${
-            progress && !isSaved() ? "font-semibold text-soleil" : "text-brume"
-          }`}
-        >
-          {progress === null
-            ? "Ma sauvegarde"
-            : isSaved()
-              ? "Sauvegardé sur ce téléphone"
-              : "Sauvegarde bloquée, exporte-la"}
-        </Link>
-      </header>
-
-      <section aria-labelledby="global" className="flex items-end gap-4">
-        <Sun percent={global?.percent ?? 0} />
-        <div className="flex flex-col gap-0.5 pb-1">
-          <h1 id="global" className="sr-only">
-            Progression globale
+      <section
+        aria-labelledby="global"
+        className="relative -mx-4 -mt-5 overflow-hidden bg-[linear-gradient(180deg,#0d1222_0%,#1b1436_38%,#3a1446_62%,#7a1d55_80%,#c2185b_100%)]"
+      >
+        <div className="relative z-10 flex flex-col gap-1 px-4 pt-4">
+          <header className="flex items-center justify-between">
+            <span className="font-display text-[26px] font-extrabold tracking-[0.5px] text-rose [text-shadow:0_0_18px_rgba(255,92,147,0.55)]">
+              {SITE_NAME}
+            </span>
+            <Link
+              href="/sauvegarde"
+              className={`flex min-h-11 items-center text-[13px] underline-offset-4 hover:underline ${
+                progress && !isSaved()
+                  ? "font-semibold text-soleil"
+                  : "text-brume"
+              }`}
+            >
+              {progress === null
+                ? "Ma sauvegarde"
+                : isSaved()
+                  ? "Sauvegardé sur ce téléphone"
+                  : "Sauvegarde bloquée, exporte-la"}
+            </Link>
+          </header>
+          <h1
+            id="global"
+            className="mt-2 text-[13px] font-bold uppercase tracking-[0.18em] text-lagon"
+          >
+            Ton 100 % GTA 6
           </h1>
-          <span className="font-display tabular text-[88px] font-extrabold leading-[0.85]">
+          <p className="font-display tabular text-[96px] font-extrabold leading-[0.82] [text-shadow:0_4px_30px_rgba(13,18,34,0.6)]">
             {global ? `${global.percent} %` : "– %"}
-          </span>
-          <span className="text-[15px] text-brume">
+          </p>
+          <p className="text-[15px] text-sable/80">
             {global
               ? `${nf.format(global.done)} objectifs sur ${nf.format(global.total)}`
               : "Chargement de ta progression"}
-          </span>
+          </p>
+        </div>
+        <div className="-mt-10">
+          <ViceSky percent={global?.percent ?? 0} />
         </div>
       </section>
 
       {global && global.done > 0 && (
-        <div className="-mt-4">
+        <div className="-mt-3">
           <ShareButton stats={global} />
         </div>
       )}
 
       <section
         aria-labelledby="reprendre"
-        className="flex flex-col gap-3 rounded-feuille bg-surface p-4"
+        className="flex flex-col gap-3 rounded-feuille border border-ligne bg-surface/80 p-4 shadow-[0_12px_40px_-16px_rgba(255,92,147,0.35)]"
       >
-        <div className="flex items-baseline justify-between">
-          <h2 id="reprendre" className="text-xl font-bold">
+        <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-brume">
+          Reprendre
+        </p>
+        <div className="flex items-baseline justify-between gap-3">
+          <h2 id="reprendre" className="text-xl font-bold leading-tight">
             <Link href={categoryPath(resume.slug)}>{resume.name}</Link>
           </h2>
-          <span className="tabular text-xl font-bold">
+          <span className="shrink-0 whitespace-nowrap font-display tabular text-[26px] font-bold leading-none">
             {r ? `${r.done} / ${r.total}` : `– / ${resume.required}`}
           </span>
         </div>
         <div className="h-1.5 rounded-full bg-ligne" aria-hidden="true">
           <div
-            className="h-1.5 rounded-full bg-lagon transition-[width] duration-300"
+            className="h-1.5 rounded-full bg-gradient-to-r from-rose to-soleil transition-[width] duration-300"
             style={{ width: `${r ? (r.done / r.total) * 100 : 0}%` }}
           />
         </div>
@@ -99,7 +111,7 @@ export function HomeDashboard() {
             type="button"
             disabled={!progress || r?.all === r?.max}
             onClick={() => updateProgress((p) => increment(resume, p, 1))}
-            className="h-12 flex-1 rounded-[10px] bg-rose text-[17px] font-bold text-nuit transition-transform active:scale-[0.97] disabled:opacity-40"
+            className="h-12 flex-1 rounded-[10px] bg-rose text-[17px] font-bold text-nuit shadow-[0_8px_24px_-8px_rgba(255,92,147,0.8)] transition-transform active:scale-[0.97] disabled:opacity-40"
           >
             +1 {resume.unit}
           </button>

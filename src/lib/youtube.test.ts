@@ -3,10 +3,22 @@ import { formatTime, parseTime, parseYouTube } from "./youtube";
 
 describe("parseYouTube", () => {
   it("lit les formats de lien courants", () => {
-    expect(parseYouTube("https://youtu.be/dQw4w9WgXcQ?t=272")).toEqual({ id: "dQw4w9WgXcQ", start: 272 });
-    expect(parseYouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=4m32s")).toEqual({ id: "dQw4w9WgXcQ", start: 272 });
-    expect(parseYouTube("https://m.youtube.com/shorts/dQw4w9WgXcQ")).toEqual({ id: "dQw4w9WgXcQ", start: 0 });
-    expect(parseYouTube("https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?start=90")).toEqual({ id: "dQw4w9WgXcQ", start: 90 });
+    expect(parseYouTube("https://youtu.be/dQw4w9WgXcQ?t=272")).toEqual({
+      id: "dQw4w9WgXcQ",
+      start: 272,
+    });
+    expect(
+      parseYouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=4m32s"),
+    ).toEqual({ id: "dQw4w9WgXcQ", start: 272 });
+    expect(parseYouTube("https://m.youtube.com/shorts/dQw4w9WgXcQ")).toEqual({
+      id: "dQw4w9WgXcQ",
+      start: 0,
+    });
+    expect(
+      parseYouTube(
+        "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?start=90",
+      ),
+    ).toEqual({ id: "dQw4w9WgXcQ", start: 90 });
   });
 
   it("refuse ce qui n'est pas une vidéo YouTube", () => {

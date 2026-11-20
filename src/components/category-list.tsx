@@ -4,28 +4,30 @@ import Link from "next/link";
 import { changelog } from "@/data/changelog";
 import { categoryPath, game } from "@/data/game";
 import { categoryProgress } from "@/lib/progress";
-import { CategoryIcon } from "./category-icon";
 import { useProgress } from "@/lib/progress-store";
 import { isCategoryNew } from "@/lib/seen";
 import { useSeen } from "@/lib/seen-store";
+import { CategoryIcon } from "./category-icon";
+import { SectionTitle } from "./section-title";
 
 export function CategoryList() {
   const progress = useProgress();
   const seen = useSeen();
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-7">
       {game.sections.map((section) => {
         const cats = game.categories.filter((c) => c.section === section.id);
         if (cats.length === 0) return null;
         return (
-          <section key={section.id} aria-labelledby={`section-${section.id}`}>
-            <h2
-              id={`section-${section.id}`}
-              className="mb-1 font-display text-[25px] font-bold"
-            >
+          <section
+            key={section.id}
+            aria-labelledby={`section-${section.id}`}
+            className="flex flex-col gap-3"
+          >
+            <SectionTitle id={`section-${section.id}`} level={3}>
               {section.name}
-            </h2>
-            <ul className="border-b border-ligne">
+            </SectionTitle>
+            <ul className="grid grid-cols-2 gap-2.5">
               {cats.map((cat) => {
                 const r = progress ? categoryProgress(progress, cat) : null;
                 const complete = r !== null && r.done === r.total;
@@ -33,44 +35,62 @@ export function CategoryList() {
                 const fresh =
                   seen !== null && isCategoryNew(seen, cat.id, changelog);
                 return (
-                  <li key={cat.id} className="border-t border-ligne">
+                  <li key={cat.id}>
                     <Link
                       href={categoryPath(cat.slug)}
-                      className="grid min-h-[64px] grid-cols-[1fr_auto] items-center gap-x-3 gap-y-1.5 py-3"
+                      className={`group relative flex h-full min-h-[136px] flex-col justify-between gap-3 overflow-hidden rounded-feuille border bg-surface p-3 transition-colors active:scale-[0.98] ${
+                        complete
+                          ? "border-lagon/70"
+                          : "border-ligne hover:border-rose/60"
+                      }`}
                     >
-                      <span className="flex items-center gap-2.5 text-[17px] font-semibold">
-                        <CategoryIcon
-                          id={cat.id}
-                          className={complete ? "text-lagon" : "text-rose"}
-                        />
-                        {cat.name}
+                      <span className="flex items-start justify-between gap-2">
+                        <span
+                          className={`flex size-10 shrink-0 items-center justify-center rounded-full ${
+                            complete
+                              ? "bg-lagon text-nuit"
+                              : "bg-nuit text-rose"
+                          }`}
+                        >
+                          <CategoryIcon id={cat.id} size={22} />
+                        </span>
                         {fresh && (
                           <span className="rounded-full bg-rose px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide text-nuit">
                             Nouveau
                           </span>
                         )}
                       </span>
-                      <span
-                        className={`tabular text-[15px] ${complete ? "font-bold text-lagon" : "text-brume"}`}
-                      >
-                        {r ? `${r.done} / ${r.total}` : `– / ${cat.required}`}
-                        {bonus && (
-                          <span className="text-[13px] font-normal text-brume">
-                            {" "}
-                            (+{r.all - r.total})
-                          </span>
-                        )}
+                      <span className="text-[15px] font-semibold leading-tight">
+                        {cat.name}
                       </span>
-                      <span
-                        className="col-span-2 h-1 rounded-full bg-ligne"
-                        aria-hidden="true"
-                      >
+                      <span className="flex flex-col gap-1.5">
+                        <span className="flex items-baseline justify-between gap-1">
+                          <span
+                            className={`font-display tabular text-[24px] font-bold leading-none ${complete ? "text-lagon" : ""}`}
+                          >
+                            {r ? r.done : "–"}
+                            <span className="text-[15px] font-semibold text-brume">
+                              {" "}
+                              / {cat.required}
+                            </span>
+                          </span>
+                          {bonus && (
+                            <span className="text-[12px] font-semibold text-soleil">
+                              +{r.all - r.total}
+                            </span>
+                          )}
+                        </span>
                         <span
-                          className="block h-1 rounded-full bg-lagon transition-[width] duration-500"
-                          style={{
-                            width: `${r ? (r.done / r.total) * 100 : 0}%`,
-                          }}
-                        />
+                          className="h-1 rounded-full bg-ligne"
+                          aria-hidden="true"
+                        >
+                          <span
+                            className={`block h-1 rounded-full transition-[width] duration-500 ${complete ? "bg-lagon" : "bg-gradient-to-r from-rose to-soleil"}`}
+                            style={{
+                              width: `${r ? (r.done / r.total) * 100 : 0}%`,
+                            }}
+                          />
+                        </span>
                       </span>
                       {complete && <span className="sr-only">Terminé</span>}
                     </Link>

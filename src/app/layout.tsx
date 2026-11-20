@@ -30,7 +30,11 @@ export const metadata: Metadata = {
     "Coche ta progression 100 % de GTA 6 d'une main, même hors ligne, sans spoilers et avec des infos vérifiées en jeu.",
   applicationName: SITE_NAME,
   openGraph: { type: "website", locale: "fr_FR", siteName: SITE_NAME },
-  appleWebApp: { capable: true, title: SITE_NAME, statusBarStyle: "black-translucent" },
+  appleWebApp: {
+    capable: true,
+    title: SITE_NAME,
+    statusBarStyle: "black-translucent",
+  },
 };
 
 export const viewport: Viewport = {
@@ -41,7 +45,10 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="fr" className={`${shoulders.variable} ${figtree.variable} antialiased`}>
+    <html
+      lang="fr"
+      className={`${shoulders.variable} ${figtree.variable} antialiased`}
+    >
       <body className="min-h-dvh">
         <a
           href="#contenu"

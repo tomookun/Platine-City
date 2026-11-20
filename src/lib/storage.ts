@@ -69,7 +69,10 @@ export function loadProgress(store: KeyValueStore | null): Progress {
 }
 
 /** Renvoie false si le navigateur refuse l'écriture (navigation privée, quota). */
-export function saveProgress(store: KeyValueStore | null, p: Progress): boolean {
+export function saveProgress(
+  store: KeyValueStore | null,
+  p: Progress,
+): boolean {
   if (!store) return false;
   try {
     store.setItem(STORAGE_KEY, serializeProgress(p));

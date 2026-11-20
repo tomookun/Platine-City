@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { celebrate, milestoneToCelebrate, parseCelebrated, reached } from "./milestones";
+import {
+  celebrate,
+  milestoneToCelebrate,
+  parseCelebrated,
+  reached,
+} from "./milestones";
 
 describe("paliers", () => {
   it("liste les paliers atteints", () => {

@@ -55,4 +55,6 @@ const entries: Change[] = [
 ];
 
 /** Du plus récent au plus ancien. */
-export const changelog: Change[] = [...entries].sort((a, b) => b.at.localeCompare(a.at));
+export const changelog: Change[] = [...entries].sort((a, b) =>
+  b.at.localeCompare(a.at),
+);

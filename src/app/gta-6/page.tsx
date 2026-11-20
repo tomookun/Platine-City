@@ -12,9 +12,12 @@ export const metadata: Metadata = {
 export default function ChecklistIndex() {
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="font-display text-[49px] font-extrabold leading-[0.9]">GTA 6 à 100 %</h1>
+      <h1 className="font-display text-[49px] font-extrabold leading-[0.9]">
+        GTA 6 à 100 %
+      </h1>
       <p className="text-brume">
-        Ce qu&apos;il faut vraiment faire pour le 100 %, catégorie par catégorie. Ta progression reste sur ce téléphone, même hors ligne.
+        Ce qu&apos;il faut vraiment faire pour le 100 %, catégorie par
+        catégorie. Ta progression reste sur ce téléphone, même hors ligne.
       </p>
       <CategoryList />
     </div>

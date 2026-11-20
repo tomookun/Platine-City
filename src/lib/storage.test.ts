@@ -40,8 +40,12 @@ describe("sauvegarde locale", () => {
 
   it("survit à un navigateur qui refuse l'accès", () => {
     const broken: KeyValueStore = {
-      getItem: () => { throw new Error("SecurityError"); },
-      setItem: () => { throw new Error("QuotaExceededError"); },
+      getItem: () => {
+        throw new Error("SecurityError");
+      },
+      setItem: () => {
+        throw new Error("QuotaExceededError");
+      },
     };
     expect(loadProgress(broken).counts).toEqual({});
     expect(saveProgress(broken, emptyProgress())).toBe(false);
@@ -52,17 +56,21 @@ describe("sauvegarde locale", () => {
 describe("parseProgress", () => {
   it("ignore un JSON cassé ou d'une autre version", () => {
     expect(parseProgress("{pas du json").checked).toEqual({});
-    expect(parseProgress(JSON.stringify({ v: 2, counts: { a: 3 } })).counts).toEqual({});
+    expect(
+      parseProgress(JSON.stringify({ v: 2, counts: { a: 3 } })).counts,
+    ).toEqual({});
     expect(parseProgress("[]").counts).toEqual({});
   });
 
   it("nettoie les valeurs invalides d'un fichier importé", () => {
-    const p = parseProgress(JSON.stringify({
-      v: 1,
-      checked: { ok: true, faux: "oui", non: false },
-      counts: { a: 3.7, b: -1, c: "12", d: null },
-      lastCategoryId: 42,
-    }));
+    const p = parseProgress(
+      JSON.stringify({
+        v: 1,
+        checked: { ok: true, faux: "oui", non: false },
+        counts: { a: 3.7, b: -1, c: "12", d: null },
+        lastCategoryId: 42,
+      }),
+    );
     expect(p.checked).toEqual({ ok: true });
     expect(p.counts).toEqual({ a: 3 });
     expect(p.lastCategoryId).toBeUndefined();
@@ -77,7 +85,10 @@ describe("tryParseProgress (import de fichier)", () => {
   });
 
   it("relit un export complet", () => {
-    const p = { ...emptyProgress(new Date("2026-11-19T10:00:00Z")), counts: { cascades: 4 } };
+    const p = {
+      ...emptyProgress(new Date("2026-11-19T10:00:00Z")),
+      counts: { cascades: 4 },
+    };
     expect(tryParseProgress(JSON.stringify(p))).toEqual(p);
   });
 });

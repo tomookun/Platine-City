@@ -11,8 +11,20 @@ import {
 } from "./seen";
 
 const log: Change[] = [
-  { id: "b", at: "2026-11-21T10:00:00Z", kind: "verification", title: "B", categories: ["flamants"] },
-  { id: "a", at: "2026-11-20T10:00:00Z", kind: "ajout", title: "A", categories: ["histoire", "flamants"] },
+  {
+    id: "b",
+    at: "2026-11-21T10:00:00Z",
+    kind: "verification",
+    title: "B",
+    categories: ["flamants"],
+  },
+  {
+    id: "a",
+    at: "2026-11-20T10:00:00Z",
+    kind: "ajout",
+    title: "A",
+    categories: ["histoire", "flamants"],
+  },
 ];
 const d = (s: string) => new Date(s);
 
@@ -55,7 +67,11 @@ describe("pastilles des catégories", () => {
 
 describe("parseSeen", () => {
   it("relit une valeur valide et nettoie les dates invalides", () => {
-    const raw = JSON.stringify({ v: 1, since: "2026-11-19T00:00:00Z", categories: { a: "2026-11-20T00:00:00Z", b: "pas une date" } });
+    const raw = JSON.stringify({
+      v: 1,
+      since: "2026-11-19T00:00:00Z",
+      categories: { a: "2026-11-20T00:00:00Z", b: "pas une date" },
+    });
     expect(parseSeen(raw)?.categories).toEqual({ a: "2026-11-20T00:00:00Z" });
   });
 

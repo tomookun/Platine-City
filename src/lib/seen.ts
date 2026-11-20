@@ -20,9 +20,14 @@ export type Seen = {
 /** Écart au-delà duquel un retour sur l'accueil compte comme une nouvelle visite. */
 export const VISIT_GAP_MS = 30 * 60 * 1000;
 
-export const emptySeen = (now = new Date()): Seen => ({ v: 1, since: now.toISOString(), categories: {} });
+export const emptySeen = (now = new Date()): Seen => ({
+  v: 1,
+  since: now.toISOString(),
+  categories: {},
+});
 
-const isIso = (s: unknown): s is string => typeof s === "string" && !Number.isNaN(Date.parse(s));
+const isIso = (s: unknown): s is string =>
+  typeof s === "string" && !Number.isNaN(Date.parse(s));
 
 /** Lit une valeur stockée ; null si absente ou invalide. */
 export function parseSeen(raw: string | null | undefined): Seen | null {
@@ -32,7 +37,8 @@ export function parseSeen(raw: string | null | undefined): Seen | null {
     if (o?.v !== 1 || !isIso(o.since)) return null;
     const categories: Record<string, string> = {};
     if (o.categories && typeof o.categories === "object") {
-      for (const [k, val] of Object.entries(o.categories)) if (isIso(val)) categories[k] = val;
+      for (const [k, val] of Object.entries(o.categories))
+        if (isIso(val)) categories[k] = val;
     }
     return {
       v: 1,
@@ -51,7 +57,8 @@ const feedThreshold = (s: Seen) => s.feedPrev ?? s.since;
 
 export const isChangeNew = (s: Seen, c: Change) => c.at > feedThreshold(s);
 
-export const newChanges = (s: Seen, log: Change[]) => log.filter((c) => isChangeNew(s, c));
+export const newChanges = (s: Seen, log: Change[]) =>
+  log.filter((c) => isChangeNew(s, c));
 
 /** Une catégorie a du nouveau si une entrée la cite après sa dernière ouverture. */
 export const isCategoryNew = (s: Seen, categoryId: string, log: Change[]) => {
@@ -72,7 +79,11 @@ export function markFeedSeen(s: Seen, now = new Date()): Seen {
   return { ...s, feedPrev: s.feed ?? s.since, feed: now.toISOString() };
 }
 
-export const markCategorySeen = (s: Seen, categoryId: string, now = new Date()): Seen => ({
+export const markCategorySeen = (
+  s: Seen,
+  categoryId: string,
+  now = new Date(),
+): Seen => ({
   ...s,
   categories: { ...s.categories, [categoryId]: now.toISOString() },
 });

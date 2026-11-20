@@ -8,7 +8,16 @@ import { GAME_BASE, categoryPath, game } from "@/data/game";
  * - fichiers /_next/static : cache d'abord (noms versionnés).
  */
 export function GET() {
-  const pages = ["/", GAME_BASE, "/nouveautes", "/guides", "/contribuer", "/sauvegarde", ...game.categories.map((c) => categoryPath(c.slug)), ...publishedGuides().map((g) => `/guides/${g.slug}`)];
+  const pages = [
+    "/",
+    GAME_BASE,
+    "/nouveautes",
+    "/guides",
+    "/contribuer",
+    "/sauvegarde",
+    ...game.categories.map((c) => categoryPath(c.slug)),
+    ...publishedGuides().map((g) => `/guides/${g.slug}`),
+  ];
   const cacheName = `platinecity-${game.version}`;
 
   const source = `

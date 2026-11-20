@@ -11,9 +11,12 @@ export const metadata: Metadata = {
 export default function NouveautesPage() {
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="font-display text-[49px] font-extrabold leading-[0.9]">Quoi de neuf</h1>
+      <h1 className="font-display text-[49px] font-extrabold leading-[0.9]">
+        Quoi de neuf
+      </h1>
       <p className="text-brume">
-        Chaque ajout, vérification en jeu ou correction, du plus récent au plus ancien.
+        Chaque ajout, vérification en jeu ou correction, du plus récent au plus
+        ancien.
       </p>
       <NewsFeed />
     </div>

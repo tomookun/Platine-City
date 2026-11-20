@@ -41,7 +41,7 @@ export function BottomNav() {
   return (
     <nav
       aria-label="Navigation principale"
-      className="fixed inset-x-0 bottom-0 z-40 bg-surface-2 pb-[env(safe-area-inset-bottom)]"
+      className="fixed inset-x-0 bottom-0 z-40 border-t border-ligne/60 bg-surface-2/85 pb-[env(safe-area-inset-bottom)] backdrop-blur-md"
     >
       <ul className="mx-auto grid h-[72px] max-w-xl grid-cols-4">
         {tabs.map((t) => {

@@ -2,7 +2,12 @@
 
 import { useSyncExternalStore } from "react";
 import type { Progress } from "./progress";
-import { STORAGE_KEY, loadProgress, saveProgress, type KeyValueStore } from "./storage";
+import {
+  STORAGE_KEY,
+  loadProgress,
+  saveProgress,
+  type KeyValueStore,
+} from "./storage";
 
 /**
  * Store client de la progression, branché sur localStorage.

@@ -79,14 +79,18 @@ const guides: Guide[] = [
   {
     slug: "_modele",
     title: "Modèle de guide (non publié)",
-    description: "Résumé en une phrase de 120 à 160 caractères, avec le mot-clé principal au début.",
+    description:
+      "Résumé en une phrase de 120 à 160 caractères, avec le mot-clé principal au début.",
     updatedAt: "2026-11-19",
     reliability: { status: "rumor" },
     readingMinutes: 3,
     about: "jeu",
     draft: true,
     body: [
-      { type: "p", text: "Première phrase : la réponse directe à la question du joueur." },
+      {
+        type: "p",
+        text: "Première phrase : la réponse directe à la question du joueur.",
+      },
       { type: "h2", text: "Étapes" },
       { type: "steps", items: ["Étape vérifiée en jeu.", "Étape suivante."] },
       { type: "tip", text: "Astuce ou piège à éviter." },
@@ -95,6 +99,9 @@ const guides: Guide[] = [
 ];
 
 export const publishedGuides = () =>
-  guides.filter((g) => !g.draft).sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+  guides
+    .filter((g) => !g.draft)
+    .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
 
-export const getGuide = (slug: string) => publishedGuides().find((g) => g.slug === slug);
+export const getGuide = (slug: string) =>
+  publishedGuides().find((g) => g.slug === slug);

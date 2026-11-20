@@ -4,43 +4,56 @@ import { CategoryList } from "@/components/category-list";
 import { GuideList } from "@/components/guide-list";
 import { HomeDashboard } from "@/components/home-dashboard";
 import { NewsFeed } from "@/components/news-feed";
+import { OfficialTrailers } from "@/components/official-trailers";
+import { SectionTitle } from "@/components/section-title";
 import { game } from "@/data/game";
+
+const more =
+  "inline-flex min-h-11 items-center text-[15px] font-semibold text-rose";
 
 export default function Home() {
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-9">
       <HomeDashboard />
 
-      <section aria-labelledby="neuf" className="flex flex-col gap-1">
-        <h2 id="neuf" className="font-display text-[25px] font-bold">
-          Quoi de neuf
-        </h2>
-        <NewsFeed limit={3} />
-        <Link
-          href="/nouveautes"
-          className="inline-flex min-h-11 items-center text-[15px] text-rose underline underline-offset-4"
+      <section aria-labelledby="neuf" className="flex flex-col gap-2">
+        <SectionTitle
+          id="neuf"
+          action={
+            <Link href="/nouveautes" className={more}>
+              Tout voir →
+            </Link>
+          }
         >
-          Toutes les nouveautés
-        </Link>
+          Quoi de neuf
+        </SectionTitle>
+        <NewsFeed limit={3} />
       </section>
 
-      <section aria-labelledby="cent" className="flex flex-col">
-        <h2 id="cent" className="mb-2 font-display text-[25px] font-bold">
-          Ton 100 %
-        </h2>
+      <section aria-labelledby="objectifs" className="flex flex-col gap-4">
+        <SectionTitle
+          id="objectifs"
+          action={
+            <Link href="/gta-6" className={more}>
+              Checklist →
+            </Link>
+          }
+        >
+          Tous les objectifs
+        </SectionTitle>
         <CategoryList />
       </section>
 
+      <section aria-labelledby="trailers" className="flex flex-col gap-3">
+        <SectionTitle id="trailers">Les trailers officiels</SectionTitle>
+        <OfficialTrailers />
+      </section>
+
       <section aria-labelledby="guides" className="flex flex-col gap-2">
-        <h2 id="guides" className="font-display text-[25px] font-bold">
-          Guides vérifiés
-        </h2>
+        <SectionTitle id="guides">Guides vérifiés</SectionTitle>
         <GuideList limit={3} />
-        <Link
-          href="/contribuer"
-          className="text-[15px] text-rose underline underline-offset-4"
-        >
-          Tu as une info ? Propose-la
+        <Link href="/contribuer" className={more}>
+          Tu as une info ? Propose-la →
         </Link>
       </section>
 

@@ -81,8 +81,12 @@ export function setCount(
   };
 }
 
-export const increment = (cat: Category, p: Progress, by = 1, now = new Date()) =>
-  setCount(cat, p, doneInCategory(p, cat) + by, now);
+export const increment = (
+  cat: Category,
+  p: Progress,
+  by = 1,
+  now = new Date(),
+) => setCount(cat, p, doneInCategory(p, cat) + by, now);
 
 export type Ratio = { done: number; total: number; percent: number };
 
